@@ -251,7 +251,6 @@ price: 30000,
 },
 ],
 },
-];
 
   {
 category: "Soups",
