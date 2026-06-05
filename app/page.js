@@ -1400,8 +1400,6 @@ price: 15000,
 },
 ];
 
-    
-];
 
 export default function Zone7OrderingPage() {
   const [cart, setCart] = useState([]);
