@@ -8,19 +8,17 @@ html,
 body {
   margin: 0;
   padding: 0;
-  background: #050505;
+  background: #020202;
   color: #fff;
   font-family: Arial, Helvetica, sans-serif;
 }
 
-body {
-  min-height: 100vh;
-}
-
 main {
   min-height: 100vh;
-  background: radial-gradient(circle at top, #1b1b1b 0%, #050505 55%, #000 100%);
-  padding-bottom: 240px;
+  padding-bottom: 260px;
+  background:
+    radial-gradient(circle at top, rgba(212, 175, 55, 0.08), transparent 35%),
+    linear-gradient(180deg, #111 0%, #050505 45%, #000 100%);
 }
 
 main > div {
@@ -29,11 +27,17 @@ main > div {
   margin: 0 auto;
 }
 
+section {
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
 /* Header */
 main > div > section:first-child {
   text-align: center;
-  padding: 70px 20px 45px;
-  border-bottom: 1px solid rgba(212, 175, 55, 0.45);
+  padding-top: 70px;
+  padding-bottom: 45px;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.35);
 }
 
 img[alt="Zone 7 Logo"] {
@@ -49,7 +53,7 @@ img[alt="Zone 7 Logo"] + span {
 }
 
 h1 {
-  color: #f5c542;
+  color: #f7c948;
   font-size: 56px;
   letter-spacing: 12px;
   margin: 0;
@@ -57,27 +61,28 @@ h1 {
 }
 
 h1 + p {
-  color: #fff;
+  color: #f4f4f4;
   letter-spacing: 8px;
   margin-top: 18px;
   font-weight: 700;
 }
 
 h1 + p + p {
-  color: #f5c542;
+  color: #f7c948;
   margin-top: 28px;
   font-weight: 800;
 }
 
-/* Inputs section */
+/* Inputs */
 main > div > section:nth-child(2) {
-  padding: 35px 24px;
-  border-bottom: 1px solid rgba(212, 175, 55, 0.4);
+  padding-top: 35px;
+  padding-bottom: 35px;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.28);
 }
 
 label {
   display: block;
-  color: #f5c542;
+  color: #f7c948;
   font-weight: 900;
   margin-bottom: 10px;
   font-size: 20px;
@@ -87,14 +92,15 @@ input,
 textarea {
   width: 100%;
   display: block;
-  background: #070707;
+  background: rgba(5, 5, 5, 0.72);
   color: #fff;
-  border: 1px solid #555;
-  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 16px;
   padding: 18px;
   font-size: 18px;
   outline: none;
   margin-bottom: 22px;
+  backdrop-filter: blur(10px);
 }
 
 input:first-of-type {
@@ -103,20 +109,21 @@ input:first-of-type {
 
 input::placeholder,
 textarea::placeholder {
-  color: #bfc7cf;
+  color: #b8c0c8;
 }
 
 /* Menu */
 main > div > section:nth-child(3) {
-  padding: 30px 24px;
+  padding-top: 34px;
+  padding-bottom: 34px;
 }
 
 h2 {
-  color: #f5c542;
+  color: #f7c948;
   font-size: 38px;
   margin: 0 0 25px;
   padding-bottom: 16px;
-  border-bottom: 1px solid rgba(212, 175, 55, 0.35);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.3);
 }
 
 h3 {
@@ -132,27 +139,26 @@ h3 + p {
 }
 
 h3 + p + p {
-  color: #f5c542;
+  color: #f7c948;
   font-weight: 900;
   font-size: 18px;
   margin: 0;
 }
 
-/* Menu item cards */
-section:nth-child(3) div div div {
-  border-radius: 18px;
-}
-
+/* Item cards */
 section:nth-child(3) div[class*="bg-zinc"] {
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.14);
   padding: 24px;
   margin-bottom: 18px;
-  background: rgba(10, 10, 10, 0.9);
+  border-radius: 22px;
+  background: rgba(12, 12, 12, 0.72);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(12px);
 }
 
-/* Buttons */
-button {
-  background: #f5c542;
+/* Add buttons only */
+section:nth-child(3) button {
+  background: #f7c948;
   color: #000;
   border: none;
   border-radius: 14px;
@@ -168,10 +174,11 @@ main > section:last-child {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(8, 8, 8, 0.96);
+  background: rgba(3, 3, 3, 0.96);
   border-top: 1px solid rgba(212, 175, 55, 0.45);
   padding: 16px 24px;
   z-index: 50;
+  backdrop-filter: blur(14px);
 }
 
 main > section:last-child > div {
@@ -184,20 +191,56 @@ main > section:last-child p {
   color: #dfe7ea;
 }
 
+/* Cart item row */
+main > section:last-child div[class*="bg-black"] {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 12px;
+  background: rgba(15, 15, 15, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+}
+
+/* Cart +/- buttons */
+main > section:last-child div[class*="bg-black"] button {
+  width: 36px;
+  height: 36px;
+  background: #171717;
+  color: #f7c948;
+  border: 1px solid rgba(247, 201, 72, 0.35);
+  border-radius: 10px;
+  padding: 0;
+  font-size: 20px;
+  font-weight: 900;
+}
+
 main > section:last-child textarea {
   margin-bottom: 14px;
   min-height: 70px;
 }
 
-main > section:last-child button:last-child {
+/* Send order button */
+main > section:last-child > div > button:last-child {
   width: 100%;
+  background: linear-gradient(180deg, #ffd84d, #d4af37);
+  color: #000;
+  border: none;
   font-size: 20px;
   padding: 20px;
   border-radius: 18px;
+  font-weight: 900;
 }
 
 /* Mobile */
 @media (max-width: 600px) {
+  section {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
   h1 {
     font-size: 42px;
     letter-spacing: 7px;
@@ -205,6 +248,10 @@ main > section:last-child button:last-child {
 
   h2 {
     font-size: 30px;
+  }
+
+  h3 {
+    font-size: 21px;
   }
 
   input,
