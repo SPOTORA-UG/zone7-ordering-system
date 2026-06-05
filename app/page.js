@@ -138,116 +138,118 @@ export default function Zone7OrderingPage() {
 
   return (
     <main className="min-h-screen bg-black text-white pb-56">
-      <section className="px-5 pt-8 pb-7 text-center border-b border-yellow-600/30 bg-gradient-to-b from-zinc-950 to-black">
-        <div className="mx-auto mb-5 h-28 w-28 rounded-full border border-yellow-500/60 bg-black flex items-center justify-center overflow-hidden shadow-lg shadow-yellow-500/10">
-          <img
-            src="/zone7-logo.png"
-            alt="Zone 7 Logo"
-            className="h-full w-full object-contain p-3"
-            onError={(e) => {
-              e.currentTarget.style.display = "none";
-            }}
-          />
-          <span className="text-yellow-400 text-xs font-black tracking-widest">
-            LOGO
-          </span>
-        </div>
-
-        <h1 className="text-5xl font-black tracking-widest text-yellow-400 drop-shadow">
-          ZONE 7
-        </h1>
-
-        <p className="mt-3 text-sm tracking-[0.25em] text-gray-300">
-          FOOD · DRINKS · EVENTS
-        </p>
-
-        <p className="mt-5 text-yellow-300 font-semibold">
-          QR Ordering by Spotora
-        </p>
-      </section>
-
-      <section className="px-5 py-5 bg-zinc-950/95 sticky top-0 z-20 border-b border-yellow-600/30 backdrop-blur">
-        <div className="max-w-3xl mx-auto grid gap-4">
-          <div>
-            <label className="block text-yellow-400 font-bold mb-2">
-              Enter Table Number
-            </label>
-
-            <input
-              value={table}
-              onChange={(e) => setTable(e.target.value)}
-              placeholder="Example: Table 12"
-              className="w-full rounded-xl px-4 py-4 bg-black border border-yellow-500/70 text-white outline-none placeholder:text-gray-500 focus:border-yellow-300"
+      <div className="mx-auto w-full max-w-md md:max-w-3xl">
+        <section className="px-5 pt-8 pb-7 text-center border-b border-yellow-600/30 bg-gradient-to-b from-zinc-950 to-black">
+          <div className="mx-auto mb-5 h-28 w-28 rounded-full border border-yellow-500/60 bg-black flex items-center justify-center overflow-hidden shadow-lg shadow-yellow-500/10">
+            <img
+              src="/zone7-logo.png"
+              alt="Zone 7 Logo"
+              className="h-full w-full object-contain p-3"
+              onError={(e) => {
+                e.currentTarget.style.display = "none";
+              }}
             />
+            <span className="text-yellow-400 text-xs font-black tracking-widest">
+              LOGO
+            </span>
           </div>
 
-          <div>
-            <label className="block text-yellow-400 font-bold mb-2">
-              Search Menu
-            </label>
+          <h1 className="text-5xl font-black tracking-widest text-yellow-400 drop-shadow">
+            ZONE 7
+          </h1>
 
-            <input
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search food, drinks, category, ingredients..."
-              className="w-full rounded-xl px-4 py-4 bg-black border border-zinc-700 text-white outline-none placeholder:text-gray-500 focus:border-yellow-400"
-            />
-          </div>
-        </div>
-      </section>
-
-      <section className="px-5 py-6 max-w-3xl mx-auto">
-        {filteredMenu.length === 0 ? (
-          <p className="text-center text-gray-400 py-10">
-            No menu items found.
+          <p className="mt-3 text-sm tracking-[0.25em] text-gray-300">
+            FOOD · DRINKS · EVENTS
           </p>
-        ) : (
-          filteredMenu.map((section) => (
-            <div key={section.category} className="mb-10">
-              <h2 className="text-3xl font-black text-yellow-400 mb-4 border-b border-yellow-600/30 pb-2">
-                {section.category}
-              </h2>
 
-              <div className="space-y-4">
-                {section.items.map((item) => (
-                  <div
-                    key={`${section.category}-${item.name}-${item.price}`}
-                    className="bg-zinc-950 border border-zinc-800 rounded-2xl p-4 shadow-lg"
-                  >
-                    <div className="flex items-start justify-between gap-4">
-                      <div>
-                        <h3 className="text-lg font-black text-white">
-                          {item.name}
-                        </h3>
+          <p className="mt-5 text-yellow-300 font-semibold">
+            QR Ordering by Spotora
+          </p>
+        </section>
 
-                        {item.description && (
-                          <p className="text-gray-400 text-sm mt-1 leading-relaxed">
-                            {item.description}
-                          </p>
-                        )}
+        <section className="px-5 py-5 bg-zinc-950/95 sticky top-0 z-20 border-b border-yellow-600/30 backdrop-blur">
+          <div className="max-w-3xl mx-auto grid gap-4">
+            <div>
+              <label className="block text-yellow-400 font-bold mb-2">
+                Enter Table Number
+              </label>
 
-                        <p className="text-yellow-300 font-bold text-sm mt-3">
-                          UGX {item.price.toLocaleString()}
-                        </p>
-                      </div>
-
-                      <button
-                        onClick={() => addItem(item)}
-                        className="bg-yellow-500 hover:bg-yellow-400 text-black font-black px-5 py-3 rounded-xl shrink-0"
-                      >
-                        Add
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <input
+                value={table}
+                onChange={(e) => setTable(e.target.value)}
+                placeholder="Example: Table 12"
+                className="w-full rounded-xl px-4 py-4 bg-black border border-yellow-500/70 text-white outline-none placeholder:text-gray-500 focus:border-yellow-300"
+              />
             </div>
-          ))
-        )}
-      </section>
+
+            <div>
+              <label className="block text-yellow-400 font-bold mb-2">
+                Search Menu
+              </label>
+
+              <input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search food, drinks, category, ingredients..."
+                className="w-full rounded-xl px-4 py-4 bg-black border border-zinc-700 text-white outline-none placeholder:text-gray-500 focus:border-yellow-400"
+              />
+            </div>
+          </div>
+        </section>
+
+        <section className="px-5 py-6 max-w-3xl mx-auto">
+          {filteredMenu.length === 0 ? (
+            <p className="text-center text-gray-400 py-10">
+              No menu items found.
+            </p>
+          ) : (
+            filteredMenu.map((section) => (
+              <div key={section.category} className="mb-10">
+                <h2 className="text-3xl font-black text-yellow-400 mb-4 border-b border-yellow-600/30 pb-2">
+                  {section.category}
+                </h2>
+
+                <div className="space-y-4">
+                  {section.items.map((item) => (
+                    <div
+                      key={`${section.category}-${item.name}-${item.price}`}
+                      className="bg-zinc-950 border border-zinc-800 rounded-2xl p-4 shadow-lg"
+                    >
+                      <div className="flex items-start justify-between gap-4">
+                        <div>
+                          <h3 className="text-lg font-black text-white">
+                            {item.name}
+                          </h3>
+
+                          {item.description && (
+                            <p className="text-gray-400 text-sm mt-1 leading-relaxed">
+                              {item.description}
+                            </p>
+                          )}
+
+                          <p className="text-yellow-300 font-bold text-sm mt-3">
+                            UGX {item.price.toLocaleString()}
+                          </p>
+                        </div>
+
+                        <button
+                          onClick={() => addItem(item)}
+                          className="bg-yellow-500 hover:bg-yellow-400 text-black font-black px-5 py-3 rounded-xl shrink-0"
+                        >
+                          Add
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))
+          )}
+        </section>
+      </div>
 
       <section className="fixed bottom-0 left-0 right-0 bg-zinc-950 border-t border-yellow-600/40 p-4">
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-md md:max-w-3xl mx-auto">
           <div className="max-h-36 overflow-y-auto mb-3 pr-1">
             {cart.length === 0 ? (
               <p className="text-gray-400 text-sm text-center">
