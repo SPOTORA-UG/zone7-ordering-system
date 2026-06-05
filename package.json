@@ -1,1 +1,15 @@
-
+{
+  "name": "zone7-ordering-system",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "tailwindcss": "latest"
+  }
+}
