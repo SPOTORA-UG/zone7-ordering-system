@@ -38,6 +38,7 @@ main > div > section:first-child {
   padding-top: 70px;
   padding-bottom: 45px;
   border-bottom: 1px solid rgba(212, 175, 55, 0.35);
+  background: linear-gradient(180deg, #050505 0%, #020202 100%);
 }
 
 img[alt="Zone 7 Logo"] {
