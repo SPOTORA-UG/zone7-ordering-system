@@ -1454,36 +1454,41 @@ export default function Zone7OrderingPage() {
         section.items.length > 0
     );
 
-  const sendOrder = () => {
-    if (!table.trim()) {
-      alert("Please enter your table number first.");
-      return;
-    }
+const sendOrder = () => {
+  if (!table.trim()) {
+    alert("Please enter your table number first.");
+    return;
+  }
 
-    if (cart.length === 0) {
-      alert("Please add at least one item.");
-      return;
-    }
+  if (cart.length === 0) {
+    alert("Please add at least one item.");
+    return;
+  }
 
-    const orderText = cart
-      .map(
-        (item) =>
-          `${item.qty}× ${item.name} — UGX ${(
-            item.price * item.qty
-          ).toLocaleString()}`
-      )
-      .join("%0A");
+  const orderText = cart
+    .map(
+      (item) =>
+        `${item.qty}× ${item.name} — UGX ${(
+          item.price * item.qty
+        ).toLocaleString()}`
+    )
+    .join("\n");
 
-    const message =
-      `🍽️ New Zone 7 Order%0A%0A` +
-      `Table: ${table}%0A%0A` +
-      `${orderText}%0A%0A` +
-      `Total: UGX ${total.toLocaleString()}%0A%0A` +
-      (notes ? `Notes: ${notes}%0A%0A` : "") +
-      `Powered by Spotora`;
+  const message =
+    `🍽️ New Zone 7 Order\n\n` +
+    `Table: ${table}\n\n` +
+    `${orderText}\n\n` +
+    `Total: UGX ${total.toLocaleString()}\n\n` +
+    (notes ? `Notes: ${notes}\n\n` : "") +
+    `Powered by Spotora`;
 
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, "_blank");
-  };
+  const encodedMessage = encodeURIComponent(message);
+
+  window.open(
+    `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`,
+    "_blank"
+  );
+};
 
   return (
     <main className="min-h-screen bg-black text-white pb-56">
