@@ -15,10 +15,11 @@ body {
 
 main {
   min-height: 100vh;
-  padding-bottom: 260px;
+  padding-bottom: 270px;
   background:
-    radial-gradient(circle at top, rgba(212, 175, 55, 0.08), transparent 35%),
-    linear-gradient(180deg, #111 0%, #050505 45%, #000 100%);
+    radial-gradient(circle at top, rgba(247, 201, 72, 0.1), transparent 32%),
+    radial-gradient(circle at bottom, rgba(247, 201, 72, 0.05), transparent 35%),
+    linear-gradient(180deg, #080808 0%, #030303 45%, #000 100%);
 }
 
 main > div {
@@ -37,16 +38,19 @@ main > div > section:first-child {
   text-align: center;
   padding-top: 70px;
   padding-bottom: 45px;
-  border-bottom: 1px solid rgba(212, 175, 55, 0.35);
-  background: linear-gradient(180deg, #050505 0%, #020202 100%);
+  border-bottom: 1px solid rgba(247, 201, 72, 0.28);
+  background:
+    radial-gradient(circle at top, rgba(247, 201, 72, 0.08), transparent 38%),
+    linear-gradient(180deg, #050505 0%, #020202 100%);
 }
 
 img[alt="Zone 7 Logo"] {
-  width: 120px !important;
-  height: 120px !important;
+  width: 118px !important;
+  height: 118px !important;
   object-fit: contain !important;
   display: block;
   margin: 0 auto 25px;
+  filter: drop-shadow(0 0 18px rgba(247, 201, 72, 0.14));
 }
 
 img[alt="Zone 7 Logo"] + span {
@@ -59,6 +63,7 @@ h1 {
   letter-spacing: 12px;
   margin: 0;
   font-weight: 900;
+  text-shadow: 0 0 22px rgba(247, 201, 72, 0.12);
 }
 
 h1 + p {
@@ -76,9 +81,10 @@ h1 + p + p {
 
 /* Inputs */
 main > div > section:nth-child(2) {
-  padding-top: 35px;
-  padding-bottom: 35px;
-  border-bottom: 1px solid rgba(212, 175, 55, 0.28);
+  padding-top: 34px;
+  padding-bottom: 34px;
+  border-bottom: 1px solid rgba(247, 201, 72, 0.2);
+  background: rgba(0, 0, 0, 0.28);
 }
 
 label {
@@ -93,30 +99,36 @@ input,
 textarea {
   width: 100%;
   display: block;
-  background: rgba(5, 5, 5, 0.72);
+  background: rgba(7, 7, 7, 0.78);
   color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 18px;
   padding: 18px;
   font-size: 18px;
   outline: none;
   margin-bottom: 22px;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
 }
 
 input:first-of-type {
-  border-color: #d4af37;
+  border-color: rgba(247, 201, 72, 0.72);
+}
+
+input:focus,
+textarea:focus {
+  border-color: rgba(247, 201, 72, 0.85);
+  box-shadow: 0 0 0 3px rgba(247, 201, 72, 0.08);
 }
 
 input::placeholder,
 textarea::placeholder {
-  color: #b8c0c8;
+  color: #aeb6bf;
 }
 
-/* Menu */
+/* Main content */
 main > div > section:nth-child(3) {
   padding-top: 34px;
-  padding-bottom: 34px;
+  padding-bottom: 38px;
 }
 
 h2 {
@@ -124,7 +136,8 @@ h2 {
   font-size: 38px;
   margin: 0 0 25px;
   padding-bottom: 16px;
-  border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+  border-bottom: 1px solid rgba(247, 201, 72, 0.28);
+  text-shadow: 0 0 18px rgba(247, 201, 72, 0.1);
 }
 
 h3 {
@@ -137,6 +150,7 @@ h3 + p {
   color: #dfe7ea;
   font-size: 18px;
   margin: 0 0 16px;
+  line-height: 1.5;
 }
 
 h3 + p + p {
@@ -146,27 +160,69 @@ h3 + p + p {
   margin: 0;
 }
 
-/* Item cards */
-section:nth-child(3) div[class*="bg-zinc"] {
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  padding: 24px;
-  margin-bottom: 18px;
+/* Premium navigation/category buttons */
+main > div > section:nth-child(3) > div > button,
+main > div > section:nth-child(3) > div > div > button {
+  width: 100%;
+  text-align: left;
+  margin-bottom: 14px;
+  padding: 22px 22px;
   border-radius: 22px;
-  background: rgba(12, 12, 12, 0.72);
-  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
-  backdrop-filter: blur(12px);
+  border: 1px solid rgba(247, 201, 72, 0.24);
+  background:
+    linear-gradient(135deg, rgba(247, 201, 72, 0.14), rgba(255, 255, 255, 0.035)),
+    rgba(10, 10, 10, 0.78);
+  color: #f7c948;
+  font-size: 21px;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.34);
+  backdrop-filter: blur(14px);
 }
 
-/* Add buttons only */
-section:nth-child(3) button {
-  background: #f7c948;
+main > div > section:nth-child(3) > div > button:hover,
+main > div > section:nth-child(3) > div > div > button:hover {
+  border-color: rgba(247, 201, 72, 0.55);
+}
+
+/* Back buttons */
+main > div > section:nth-child(3) button:first-child:not(:only-child) {
+  width: auto;
+  margin-bottom: 24px;
+  padding: 12px 18px;
+  border-radius: 999px;
+  background: rgba(247, 201, 72, 0.1);
+  color: #f7c948;
+  border: 1px solid rgba(247, 201, 72, 0.35);
+  font-size: 15px;
+}
+
+/* Item cards */
+section:nth-child(3) div[class*="bg-zinc"] {
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  padding: 24px;
+  margin-bottom: 18px;
+  border-radius: 24px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.045), rgba(247, 201, 72, 0.035)),
+    rgba(10, 10, 10, 0.78);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.38);
+  backdrop-filter: blur(14px);
+}
+
+/* Add buttons inside item cards */
+section:nth-child(3) div[class*="bg-zinc"] button {
+  background: linear-gradient(180deg, #ffd84d, #d4af37);
   color: #000;
   border: none;
-  border-radius: 14px;
+  border-radius: 16px;
   padding: 14px 24px;
   font-weight: 900;
   font-size: 16px;
   cursor: pointer;
+  width: auto;
+  margin-bottom: 0;
+  box-shadow: 0 10px 24px rgba(247, 201, 72, 0.12);
 }
 
 /* Bottom cart */
@@ -175,11 +231,13 @@ main > section:last-child {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(3, 3, 3, 0.96);
-  border-top: 1px solid rgba(212, 175, 55, 0.45);
+  background:
+    linear-gradient(180deg, rgba(18, 18, 18, 0.92), rgba(2, 2, 2, 0.98));
+  border-top: 1px solid rgba(247, 201, 72, 0.42);
   padding: 16px 24px;
   z-index: 50;
-  backdrop-filter: blur(14px);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 -18px 45px rgba(0, 0, 0, 0.55);
 }
 
 main > section:last-child > div {
@@ -198,9 +256,9 @@ main > section:last-child div[class*="bg-black"] {
   grid-template-columns: 1fr auto;
   align-items: center;
   gap: 12px;
-  background: rgba(15, 15, 15, 0.75);
+  background: rgba(15, 15, 15, 0.82);
   border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 14px;
+  border-radius: 16px;
   padding: 10px 12px;
   margin-bottom: 8px;
 }
@@ -233,6 +291,7 @@ main > section:last-child > div > button:last-child {
   padding: 20px;
   border-radius: 18px;
   font-weight: 900;
+  box-shadow: 0 14px 30px rgba(247, 201, 72, 0.14);
 }
 
 /* Mobile */
@@ -262,5 +321,11 @@ main > section:last-child > div > button:last-child {
 
   main > div > section:first-child {
     padding-top: 45px;
+  }
+
+  main > div > section:nth-child(3) > div > button,
+  main > div > section:nth-child(3) > div > div > button {
+    font-size: 18px;
+    padding: 19px 18px;
   }
 }
