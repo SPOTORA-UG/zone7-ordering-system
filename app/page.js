@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 const WHATSAPP_NUMBER = "256771753680";
 
@@ -1408,6 +1408,7 @@ export default function Zone7OrderingPage() {
   const [search, setSearch] = useState("");
   const [view, setView] = useState("home");
 const [selectedCategory, setSelectedCategory] = useState(null);
+  const categoryRef = useRef(null);
 
 const foodCategories = [
   "Breakfast",
@@ -1603,7 +1604,8 @@ const sendOrder = () => {
           </div>
         </section>
 
-        <section className="px-5 py-6 max-w-3xl mx-auto">
+        <section 
+            ref={categoryRef} className="px-5 py-6 max-w-3xl mx-auto">
   {view === "home" && (
     <div className="space-y-4">
       <button
@@ -1634,7 +1636,13 @@ const sendOrder = () => {
             setSelectedCategory(category);
             setSearch("");
             setView("category");
-            window.scrollTo({ top: 0, behavior: "smooth" });
+            setTimeout(() => {
+  categoryRef.current?.scrollIntoView({
+    behavior: "smooth",
+    block: "start",
+  });
+}, 80);
+
           }}
           className="w-full mb-3 text-left"
         >
@@ -1656,7 +1664,13 @@ const sendOrder = () => {
             setSelectedCategory(category);
             setSearch("");
             setView("category");
-            window.scrollTo({ top: 0, behavior: "smooth" });
+            setTimeout(() => {
+  categoryRef.current?.scrollIntoView({
+    behavior: "smooth",
+    block: "start",
+  });
+}, 80);
+
           }}
           className="w-full mb-3 text-left"
         >
