@@ -1586,7 +1586,7 @@ const sendOrder = () => {
                 className="w-full rounded-xl px-4 py-4 bg-black border border-yellow-500/70 text-white outline-none placeholder:text-gray-500 focus:border-yellow-300"
               />
             </div>
-
+        {view === "category" && (
             <div>
               <label className="block text-yellow-400 font-bold mb-2">
                 Search Menu
@@ -1601,6 +1601,7 @@ const sendOrder = () => {
             </div>
           </div>
         </section>
+          )}
 
         <section className="px-5 py-6 max-w-3xl mx-auto">
   {view === "home" && (
@@ -1633,6 +1634,7 @@ const sendOrder = () => {
             setSelectedCategory(category);
             setSearch("");
             setView("category");
+            window.scrollTo({ top: 0, behavior: "smooth" });
           }}
           className="w-full mb-3 text-left"
         >
@@ -1654,6 +1656,7 @@ const sendOrder = () => {
             setSelectedCategory(category);
             setSearch("");
             setView("category");
+            window.scrollTo({ top: 0, behavior: "smooth" });
           }}
           className="w-full mb-3 text-left"
         >
