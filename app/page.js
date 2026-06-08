@@ -1406,6 +1406,42 @@ export default function Zone7OrderingPage() {
   const [table, setTable] = useState("");
   const [notes, setNotes] = useState("");
   const [search, setSearch] = useState("");
+  const [view, setView] = useState("home");
+const [selectedCategory, setSelectedCategory] = useState(null);
+
+const foodCategories = [
+  "Breakfast",
+  "Tasty Bites",
+  "Salads",
+  "Boiled Dishes",
+  "Fried Dishes",
+  "Soups",
+  "Curry Dishes",
+  "Roasts / Grills",
+  "Platters",
+  "Pizza",
+  "Zone 7 Lunch Buffet",
+  "A Little More",
+];
+
+const drinkCategories = [
+  "Soft Drinks",
+  "Juice",
+  "Smoothies",
+  "Milkshakes",
+  "Hot Beverages",
+  "Beers",
+  "Whisky Bottles",
+  "Gins & liqueur Bottles",
+  "Tequila",
+  "Vodka",
+  "Rum",
+  "Wines",
+  "Sparkling Bottles",
+  "Champagne",
+  "Brandy & Cognac Bottles",
+  "Shots",
+];
 
   const addItem = (item) => {
     setCart((prev) => {
@@ -1435,25 +1471,40 @@ export default function Zone7OrderingPage() {
 
   const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
 
-  const filteredMenu = menu
-    .map((section) => ({
-      ...section,
-      items: section.items.filter((item) => {
-        const q = search.toLowerCase();
+const filteredMenu = menu
+  .map((section) => ({
+    ...section,
+    items: section.items.filter((item) => {
+      const q = search.toLowerCase();
 
-        return (
-          section.category.toLowerCase().includes(q) ||
-          item.name.toLowerCase().includes(q) ||
-          item.description.toLowerCase().includes(q)
-        );
-      }),
-    }))
-    .filter(
-      (section) =>
-        section.category.toLowerCase().includes(search.toLowerCase()) ||
-        section.items.length > 0
-    );
+      return (
+        section.category.toLowerCase().includes(q) ||
+        item.name.toLowerCase().includes(q) ||
+        item.description.toLowerCase().includes(q)
+      );
+    }),
+  }))
+  .filter(
+    (section) =>
+      section.category.toLowerCase().includes(search.toLowerCase()) ||
+      section.items.length > 0
+  );
 
+const selectedMenuSection = selectedCategory
+  ? menu.find((section) => section.category === selectedCategory)
+  : null;
+
+const filteredSelectedItems = selectedMenuSection
+  ? selectedMenuSection.items.filter((item) => {
+      const q = search.toLowerCase();
+
+      return (
+        selectedMenuSection.category.toLowerCase().includes(q) ||
+        item.name.toLowerCase().includes(q) ||
+        item.description.toLowerCase().includes(q)
+      );
+    })
+  : [];
 const sendOrder = () => {
   if (!table.trim()) {
     alert("Please enter your table number first.");
@@ -1552,54 +1603,116 @@ const sendOrder = () => {
         </section>
 
         <section className="px-5 py-6 max-w-3xl mx-auto">
-          {filteredMenu.length === 0 ? (
-            <p className="text-center text-gray-400 py-10">
-              No menu items found.
-            </p>
-          ) : (
-            filteredMenu.map((section) => (
-              <div key={section.category} className="mb-10">
-                <h2 className="text-3xl font-black text-yellow-400 mb-4 border-b border-yellow-600/30 pb-2">
-                  {section.category}
-                </h2>
+  {view === "home" && (
+    <div className="space-y-4">
+      <button
+        onClick={() => setView("food")}
+        className="w-full bg-yellow-500 text-black font-black py-5 rounded-2xl text-xl"
+      >
+        View Food Menu
+      </button>
 
-                <div className="space-y-4">
-                  {section.items.map((item) => (
-                    <div
-                      key={`${section.category}-${item.name}-${item.price}`}
-                      className="bg-zinc-950 border border-zinc-800 rounded-2xl p-4 shadow-lg"
-                    >
-                      <div className="flex items-start justify-between gap-4">
-                        <div>
-                          <h3 className="text-lg font-black text-white">
-                            {item.name}
-                          </h3>
+      <button
+        onClick={() => setView("drinks")}
+        className="w-full bg-yellow-500 text-black font-black py-5 rounded-2xl text-xl"
+      >
+        View Drinks Menu
+      </button>
+    </div>
+  )}
 
-                          {item.description && (
-                            <p className="text-gray-400 text-sm mt-1 leading-relaxed">
-                              {item.description}
-                            </p>
-                          )}
+  {view === "food" && (
+    <div>
+      <button onClick={() => setView("home")}>← Back</button>
+      <h2>Food Menu</h2>
 
-                          <p className="text-yellow-300 font-bold text-sm mt-3">
-                            UGX {item.price.toLocaleString()}
-                          </p>
-                        </div>
+      {foodCategories.map((category) => (
+        <button
+          key={category}
+          onClick={() => {
+            setSelectedCategory(category);
+            setSearch("");
+            setView("category");
+          }}
+          className="w-full mb-3 text-left"
+        >
+          {category}
+        </button>
+      ))}
+    </div>
+  )}
 
-                        <button
-                          onClick={() => addItem(item)}
-                          className="bg-yellow-500 hover:bg-yellow-400 text-black font-black px-5 py-3 rounded-xl shrink-0"
-                        >
-                          Add
-                        </button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+  {view === "drinks" && (
+    <div>
+      <button onClick={() => setView("home")}>← Back</button>
+      <h2>Drinks Menu</h2>
+
+      {drinkCategories.map((category) => (
+        <button
+          key={category}
+          onClick={() => {
+            setSelectedCategory(category);
+            setSearch("");
+            setView("category");
+          }}
+          className="w-full mb-3 text-left"
+        >
+          {category}
+        </button>
+      ))}
+    </div>
+  )}
+
+  {view === "category" && selectedMenuSection && (
+    <div>
+      <button
+        onClick={() => {
+          setSelectedCategory(null);
+          setSearch("");
+          setView(foodCategories.includes(selectedMenuSection.category) ? "food" : "drinks");
+        }}
+      >
+        ← Back to Categories
+      </button>
+
+      <h2>{selectedMenuSection.category}</h2>
+
+      {filteredSelectedItems.length === 0 ? (
+        <p className="text-center text-gray-400 py-10">No menu items found.</p>
+      ) : (
+        filteredSelectedItems.map((item) => (
+          <div
+            key={`${selectedMenuSection.category}-${item.name}-${item.price}`}
+            className="bg-zinc-950 border border-zinc-800 rounded-2xl p-4 shadow-lg"
+          >
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <h3 className="text-lg font-black text-white">{item.name}</h3>
+
+                {item.description && (
+                  <p className="text-gray-400 text-sm mt-1 leading-relaxed">
+                    {item.description}
+                  </p>
+                )}
+
+                <p className="text-yellow-300 font-bold text-sm mt-3">
+                  UGX {item.price.toLocaleString()}
+                </p>
               </div>
-            ))
-          )}
-        </section>
+
+              <button
+                onClick={() => addItem(item)}
+                className="bg-yellow-500 hover:bg-yellow-400 text-black font-black px-5 py-3 rounded-xl shrink-0"
+              >
+                Add
+              </button>
+            </div>
+          </div>
+        ))
+      )}
+    </div>
+  )}
+</section>
       </div>
 
       <section className="fixed bottom-0 left-0 right-0 bg-zinc-950 border-t border-yellow-600/40 p-4">
