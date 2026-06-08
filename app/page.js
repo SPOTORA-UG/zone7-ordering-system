@@ -21,10 +21,20 @@ description:
 price: 30000,
 },
 {
-name: "Uganda Katogo Breakfast",
-description: "With beef in matooke with greens.",
+name: "Uganda Katogo I",
+description: "Beef in Matooke with greens.",
 price: 12000,
 },
+  {
+    name: "Uganda Katogo II",
+    description: "G-nut paste in Matooke with greens",
+    price: 10000,
+  },
+  {
+    name: "Uganda Katogo III",
+    description: "  Beef in Irish with greens",
+    price: 15000,
+  },
 {
 name: "Wraps Breakfast (Zone 7 Rolex)",
 description:
@@ -49,8 +59,8 @@ price: 10000,
 },
 {
 name: "Boiled Eggs",
-description: "",
-price: 1000,
+description: "A pair",
+price: 7000,
 },
 {
 name: "UG rolex",
@@ -430,19 +440,19 @@ description:
 price: 40000,
 },
 {
-name: "Additional Pizza Toppings 1",
+name: "Additional Pizza Toppings I",
 description:
 "Vegetables/ Tomatoes/ Onions/ Green Pepper",
 price: 7000,
 },
 {
-name: "Additional Pizza Toppings 2",
+name: "Additional Pizza Toppings II",
 description:
 "Cheese/ Mushroom/ Salami",
 price: 5000,
 },
 {
-name: "Additional pizza toppings 3",
+name: "Additional pizza toppings III",
 description:
 "Pepper/ Broccoli/ Cougettes",
 price: 3000,
@@ -1141,7 +1151,44 @@ price: 110000,
 },
 ],
 },
-
+  {
+    category: "Cocktails",
+    items: [
+      {
+        name:"Midnight Mojito",
+        description: "Lemon juice,fresh mint,fresh lime,simple syrup,white rum, soda water",
+        price: 30000,
+      },
+      {
+        name:"Berry Seduction", description: "Lemon juice,fresh mint,fresh lime,strawberry fruits,white rum, soda water", price: 30000,
+      },
+      {
+        name:"Whisky Whisper", description: "JW red label, sour mix, angostura", price: 30000,
+      },
+      {
+        name:"Pretty in Pink", description: "Bailey's, Kahlua coffee, strawberry syrup, gin, vodka", price: 30000,
+      },
+      {
+        name:"Island Breeze", description: "UG Coco, lemon juice, fresh mint, fresh lime, simple syrup", price: 25000,
+      },
+      {
+        name:"Tequila Temptation", description: "Lime juice, triple sec, tequila", price: 30000,
+      },
+      {
+        name:"Ruby Nights", description: "Fruits, red sweet wine, vodka, a dash of Schweppes", price: 30000,
+      },
+      {
+        name:"Long Island Lust", description: "Lemon juice, triple sec, tequila, white rum, gin, vodka, coke", price:  35000,
+      },
+      {
+        name:"Bahama Dream", description: "Lime cordial, fresh strawberries, strawberry syrup, sour mix, havana club, savanna", price: 40000,
+      },
+      {
+        name:"Sunrise Kiss (Mocktail)", description: "Orange juice, pineapple juice, sour mix, strawberry syrup", price: 20000,
+      },
+      
+    ],
+  },
 {
 category: "Rum",
 items: [
