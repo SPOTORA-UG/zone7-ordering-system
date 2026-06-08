@@ -1531,8 +1531,7 @@ const sendOrder = () => {
     `Table: ${table}\n\n` +
     `${orderText}\n\n` +
     `Total: UGX ${total.toLocaleString()}\n\n` +
-    (notes ? `Notes: ${notes}\n\n` : "") +
-    `Powered by Spotora`;
+    (notes ? `Notes: ${notes}\n\n` : "");
 
   const encodedMessage = encodeURIComponent(message);
 
