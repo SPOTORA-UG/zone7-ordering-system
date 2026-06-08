@@ -1599,9 +1599,9 @@ const sendOrder = () => {
                 className="w-full rounded-xl px-4 py-4 bg-black border border-zinc-700 text-white outline-none placeholder:text-gray-500 focus:border-yellow-400"
               />
             </div>
+                  )}
           </div>
         </section>
-          )}
 
         <section className="px-5 py-6 max-w-3xl mx-auto">
   {view === "home" && (
