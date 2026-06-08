@@ -1483,6 +1483,7 @@ const drinkCategories = [
   "Gins & liqueur Bottles",
   "Tequila",
   "Vodka",
+  "Cocktails",
   "Rum",
   "Wines",
   "Sparkling Bottles",
