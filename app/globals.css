@@ -329,3 +329,11 @@ main > section:last-child > div > button:last-child {
     padding: 19px 18px;
   }
 }
+/* Equal landing buttons */
+main > div > section:nth-child(3) > div.space-y-4 > button {
+  width: 100%;
+  display: block;
+  text-align: center;
+  min-height: 72px;
+  margin-bottom: 18px;
+}
