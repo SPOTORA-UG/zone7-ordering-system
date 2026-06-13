@@ -1459,13 +1459,13 @@ const [selectedCategory, setSelectedCategory] = useState(null);
 
 const foodCategories = [
   "Breakfast",
+   "Roasts / Grills",
   "Tasty Bites",
   "Salads",
   "Boiled Dishes",
   "Fried Dishes",
   "Soups",
   "Curry Dishes",
-  "Roasts / Grills",
   "Platters",
   "Pizza",
   "Zone 7 Lunch Buffet",
