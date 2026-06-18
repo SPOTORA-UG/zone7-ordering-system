@@ -3,7 +3,21 @@
 import { useState, useRef } from "react";
 
 const WHATSAPP_NUMBER = "256771753680";
+const ADD_ONS = [
+  { name: "Chips", price: 10000 },
+  { name: "Rice", price: 9000 },
+  { name: "Salad", price: 12000 },
+  { name: "Matooke", price: 7000 },
+  { name: "Posho", price: 8000 },
+  { name: "Kachumbari", price: 4000 },
+];
 
+const CATEGORIES_WITH_ADDONS = [
+  "Platters",
+  "Roasts / Grills",
+  "Curry Dishes",
+  "Fried Dishes",
+];
 const menu = [
 {
 category: "Breakfast",
@@ -1454,7 +1468,8 @@ export default function Zone7OrderingPage() {
   const [notes, setNotes] = useState("");
   const [search, setSearch] = useState("");
   const [view, setView] = useState("home");
-const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+const [selectedAddOns, setSelectedAddOns] = useState({});
   const categoryRef = useRef(null);
 
 const foodCategories = [
@@ -1492,21 +1507,44 @@ const drinkCategories = [
   "Shots",
 ];
 
-  const addItem = (item) => {
-    setCart((prev) => {
-      const existing = prev.find((cartItem) => cartItem.name === item.name);
+const addItem = (item) => {
+const chosenAddons = selectedAddOns[item.name] || [];
 
-      if (existing) {
-        return prev.map((cartItem) =>
-          cartItem.name === item.name
-            ? { ...cartItem, qty: cartItem.qty + 1 }
-            : cartItem
-        );
-      }
+const addonTotal =
+chosenAddons.reduce(
+(sum, addon) => sum + addon.price,
+0
+);
 
-      return [...prev, { ...item, qty: 1 }];
-    });
-  };
+const finalItem = {
+...item,
+addOns: chosenAddons,
+price: item.price + addonTotal,
+basePrice: item.price,
+};
+
+setCart((prev) => {
+const existing = prev.find(
+(cartItem) =>
+cartItem.name === finalItem.name &&
+JSON.stringify(cartItem.addOns) ===
+JSON.stringify(finalItem.addOns)
+);
+
+if (existing) {
+return prev.map((cartItem) =>
+cartItem === existing
+? {
+...cartItem,
+qty: cartItem.qty + 1,
+}
+: cartItem
+);
+}
+
+return [...prev, { ...finalItem, qty: 1 }];
+});
+};
 
   const changeQty = (name, amount) => {
     setCart((prev) =>
