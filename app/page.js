@@ -1800,6 +1800,59 @@ const sendOrder = () => {
                 <p className="text-yellow-300 font-bold text-sm mt-3">
                   UGX {item.price.toLocaleString()}
                 </p>
+                  {CATEGORIES_WITH_ADDONS.includes(selectedMenuSection.category) && (
+  <div className="mt-4 rounded-xl border border-yellow-600/30 bg-black/40 p-3">
+    <p className="text-yellow-400 text-sm font-black mb-2">
+      Add-Ons:
+    </p>
+
+    <div className="grid gap-2">
+      {ADD_ONS.map((addon) => {
+        const currentAddOns = selectedAddOns[item.name] || [];
+        const isChecked = currentAddOns.some(
+          (selected) => selected.name === addon.name
+        );
+
+        return (
+          <label
+            key={`${item.name}-${addon.name}`}
+            className="flex items-center justify-between gap-3 text-sm text-gray-200"
+          >
+            <span className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                checked={isChecked}
+                onChange={() => {
+                  setSelectedAddOns((prev) => {
+                    const existing = prev[item.name] || [];
+
+                    const updated = isChecked
+                      ? existing.filter(
+                          (selected) => selected.name !== addon.name
+                        )
+                      : [...existing, addon];
+
+                    return {
+                      ...prev,
+                      [item.name]: updated,
+                    };
+                  });
+                }}
+                className="h-4 w-4 accent-yellow-500"
+              />
+
+              {addon.name}
+            </span>
+
+            <span className="text-yellow-300 font-bold">
+              + UGX {addon.price.toLocaleString()}
+            </span>
+          </label>
+        );
+      })}
+    </div>
+  </div>
+)}
               </div>
 
               <button
