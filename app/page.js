@@ -1470,6 +1470,7 @@ export default function Zone7OrderingPage() {
   const [view, setView] = useState("home");
   const [selectedCategory, setSelectedCategory] = useState(null);
 const [selectedAddOns, setSelectedAddOns] = useState({});
+  const [openAddOns, setOpenAddOns] = useState({});
   const categoryRef = useRef(null);
 
 const foodCategories = [
@@ -1604,13 +1605,25 @@ const sendOrder = () => {
   }
 
   const orderText = cart
-    .map(
-      (item) =>
-        `${item.qty}× ${item.name} — UGX ${(
-          item.price * item.qty
-        ).toLocaleString()}`
-    )
-    .join("\n");
+  .map((item) => {
+    const addonsText =
+      item.addOns && item.addOns.length > 0
+        ? "\nAdd-Ons:\n" +
+          item.addOns
+            .map(
+              (addon) =>
+                `+ ${addon.name} — UGX ${addon.price.toLocaleString()}`
+            )
+            .join("\n")
+        : "";
+
+    return (
+      `${item.qty}× ${item.name} — UGX ${(
+        item.price * item.qty
+      ).toLocaleString()}` + addonsText
+    );
+  })
+  .join("\n\n");
 
   const message =
     `🍽️ New Zone 7 Order\n\n` +
@@ -1800,7 +1813,8 @@ const sendOrder = () => {
                 <p className="text-yellow-300 font-bold text-sm mt-3">
                   UGX {item.price.toLocaleString()}
                 </p>
-                  {CATEGORIES_WITH_ADDONS.includes(selectedMenuSection.category) && (
+                {CATEGORIES_WITH_ADDONS.includes(selectedMenuSection.category) &&
+  openAddOns[item.name] && (
   <div className="mt-4 rounded-xl border border-yellow-600/30 bg-black/40 p-3">
     <p className="text-yellow-400 text-sm font-black mb-2">
       Add-Ons:
@@ -1814,53 +1828,71 @@ const sendOrder = () => {
         );
 
         return (
-          <label
-            key={`${item.name}-${addon.name}`}
-            className="flex items-center justify-between gap-3 text-sm text-gray-200"
-          >
-            <span className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                checked={isChecked}
-                onChange={() => {
-                  setSelectedAddOns((prev) => {
-                    const existing = prev[item.name] || [];
+         <label
+  key={`${item.name}-${addon.name}`}
+  className="flex items-center justify-between gap-3 py-2 text-sm"
+>
+  <span className="flex items-center gap-3 text-gray-200">
+    <input
+      type="checkbox"
+      checked={isChecked}
+      onChange={() => {
+        setSelectedAddOns((prev) => {
+          const existing = prev[item.name] || [];
 
-                    const updated = isChecked
-                      ? existing.filter(
-                          (selected) => selected.name !== addon.name
-                        )
-                      : [...existing, addon];
+          const updated = isChecked
+            ? existing.filter((selected) => selected.name !== addon.name)
+            : [...existing, addon];
 
-                    return {
-                      ...prev,
-                      [item.name]: updated,
-                    };
-                  });
-                }}
-                className="h-4 w-4 accent-yellow-500"
-              />
+          return {
+            ...prev,
+            [item.name]: updated,
+          };
+        });
+      }}
+      className="h-5 w-5 shrink-0 accent-yellow-500"
+    />
 
-              {addon.name}
-            </span>
+    <span>{addon.name}</span>
+  </span>
 
-            <span className="text-yellow-300 font-bold">
-              + UGX {addon.price.toLocaleString()}
-            </span>
-          </label>
+  <span className="text-yellow-300 font-bold whitespace-nowrap">
+    + UGX {addon.price.toLocaleString()}
+  </span>
+</label>
         );
       })}
+<button
+  onClick={() => addItem(item)}
+  className="mt-4 w-full bg-yellow-500 hover:bg-yellow-400 text-black font-black py-3 rounded-xl"
+>
+  Add to Order
+</button>
     </div>
   </div>
 )}
+  
               </div>
 
-              <button
-                onClick={() => addItem(item)}
-                className="bg-yellow-500 hover:bg-yellow-400 text-black font-black px-5 py-3 rounded-xl shrink-0"
-              >
-                Add
-              </button>
+             <button
+  onClick={() => {
+    if (CATEGORIES_WITH_ADDONS.includes(selectedMenuSection.category)) {
+      setOpenAddOns((prev) => ({
+        ...prev,
+        [item.name]: !prev[item.name],
+      }));
+    } else {
+      addItem(item);
+    }
+  }}
+  className="bg-yellow-500 hover:bg-yellow-400 text-black font-black px-5 py-3 rounded-xl shrink-0"
+>
+  {CATEGORIES_WITH_ADDONS.includes(selectedMenuSection.category)
+    ? openAddOns[item.name]
+      ? "Close"
+      : "Add"
+    : "Add"}
+</button>
             </div>
           </div>
         ))
