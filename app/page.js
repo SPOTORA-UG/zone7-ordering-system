@@ -1829,52 +1829,41 @@ export default function Zone7OrderingPage() {
                                       selected.name === addon.name
                                   );
                                 return (
-  <label
-    key={`${item.name}-${addon.name}`}
-    className="flex items-center gap-3 py-3 cursor-pointer"
-  >
-    <input
-      type="checkbox"
-      checked={isChecked}
-      onChange={() => {
-        setSelectedAddOns((prev) => {
-          const existing = prev[item.name] || [];
+<label
+  key={`${item.name}-${addon.name}`}
+  className="addon-option"
+>
+  <input
+    type="checkbox"
+    checked={isChecked}
+    onChange={() => {
+      setSelectedAddOns((prev) => {
+        const existing = prev[item.name] || [];
 
-          const updated = isChecked
-            ? existing.filter((selected) => selected.name !== addon.name)
-            : [...existing, addon];
+        const updated = isChecked
+          ? existing.filter((selected) => selected.name !== addon.name)
+          : [...existing, addon];
 
-          return {
-            ...prev,
-            [item.name]: updated,
-          };
-        });
-      }}
-      className="sr-only"
-    />
+        return {
+          ...prev,
+          [item.name]: updated,
+        };
+      });
+    }}
+    className="sr-only"
+  />
 
-    <span
-      className={`flex h-5 w-5 shrink-0 items-center justify-center rounded border-2 ${
-        isChecked
-          ? "border-yellow-400 bg-yellow-400"
-          : "border-yellow-500 bg-black"
-      }`}
-    >
-      {isChecked && (
-        <span className="text-xs font-black text-black">✓</span>
-      )}
+  <span className={`addon-checkbox ${isChecked ? "checked" : ""}`}>
+    {isChecked && <span className="addon-checkmark">✓</span>}
+  </span>
+
+  <div className="addon-text">
+    <span className="addon-name">{addon.name}</span>
+    <span className="addon-price">
+      UGX {addon.price.toLocaleString()}
     </span>
-
-    <div className="flex items-center gap-2">
-      <span className="text-yellow-400 font-black text-lg">
-        {addon.name}
-      </span>
-
-      <span className="text-white font-semibold text-sm">
-        UGX {addon.price.toLocaleString()}
-      </span>
-    </div>
-  </label>
+  </div>
+</label>
 );
                                 })}
                               </div>
