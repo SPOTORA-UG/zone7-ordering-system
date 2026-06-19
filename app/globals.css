@@ -387,3 +387,11 @@ main > section:last-child > div > button:last-child {
   font-weight: 700;
   margin-top: 3px;
 }
+/* Hide native checkbox */
+input[type="checkbox"] {
+  position: absolute !important;
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  pointer-events: none !important;
+}
