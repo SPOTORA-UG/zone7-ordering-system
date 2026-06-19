@@ -334,3 +334,56 @@ main > section:last-child > div > button:last-child {
     font-size: 18px;
   }
 }
+
+/* ADD-ONS */
+
+.addon-option {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 0;
+  cursor: pointer;
+}
+
+.addon-checkbox {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  border: 2px solid #f7c948;
+  background: #000;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.addon-checkbox.checked {
+  background: #000;
+  border-color: #ffd84d;
+  box-shadow: 0 0 12px rgba(247, 201, 72, 0.25);
+}
+
+.addon-checkmark {
+  color: #ffd84d;
+  font-size: 15px;
+  font-weight: 900;
+}
+
+.addon-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+
+.addon-name {
+  color: #f7c948;
+  font-size: 17px;
+  font-weight: 900;
+}
+
+.addon-price {
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  margin-top: 3px;
+}
