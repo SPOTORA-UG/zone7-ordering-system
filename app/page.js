@@ -1830,43 +1830,36 @@ export default function Zone7OrderingPage() {
                                   );
 
                                   return (
-                                    <label
-                                      key={`${item.name}-${addon.name}`}
-                                      className="grid grid-cols-[24px_1fr_auto] items-center gap-3 text-sm"
-                                    >
-                                      <input
-                                        type="checkbox"
-                                        checked={isChecked}
-                                        onChange={() => {
-                                          setSelectedAddOns((prev) => {
-                                            const existing =
-                                              prev[item.name] || [];
+       <label
+  key={`${item.name}-${addon.name}`}
+  className="grid grid-cols-[22px_1fr_auto] items-center gap-3 py-1 text-sm"
+>
+  <input
+    type="checkbox"
+    checked={isChecked}
+    onChange={() => {
+      setSelectedAddOns((prev) => {
+        const existing = prev[item.name] || [];
 
-                                            const updated = isChecked
-                                              ? existing.filter(
-                                                  (selected) =>
-                                                    selected.name !==
-                                                    addon.name
-                                                )
-                                              : [...existing, addon];
+        const updated = isChecked
+          ? existing.filter((selected) => selected.name !== addon.name)
+          : [...existing, addon];
 
-                                            return {
-                                              ...prev,
-                                              [item.name]: updated,
-                                            };
-                                          });
-                                        }}
-                                        className="h-5 w-5 accent-yellow-500"
-                                      />
+        return {
+          ...prev,
+          [item.name]: updated,
+        };
+      });
+    }}
+    className="h-5 w-5 shrink-0 appearance-none rounded border border-yellow-600 bg-black checked:bg-yellow-500 checked:border-yellow-400"
+  />
 
-                                      <span className="text-gray-200">
-                                        {addon.name}
-                                      </span>
+  <span className="text-gray-200">{addon.name}</span>
 
-                                      <span className="text-yellow-300 font-bold whitespace-nowrap">
-                                        UGX {addon.price.toLocaleString()}
-                                      </span>
-                                    </label>
+  <span className="text-yellow-300 font-bold whitespace-nowrap">
+    UGX {addon.price.toLocaleString()}
+  </span>
+</label>
                                   );
                                 })}
                               </div>
