@@ -1469,89 +1469,83 @@ export default function Zone7OrderingPage() {
   const [search, setSearch] = useState("");
   const [view, setView] = useState("home");
   const [selectedCategory, setSelectedCategory] = useState(null);
-const [selectedAddOns, setSelectedAddOns] = useState({});
+  const [selectedAddOns, setSelectedAddOns] = useState({});
   const [openAddOns, setOpenAddOns] = useState({});
   const categoryRef = useRef(null);
 
-const foodCategories = [
-  "Breakfast",
-  "Roasts / Grills",
-  "Fried Dishes",
-  "Platters",
-  "A Little More",
-  "Tasty Bites",
-  "Salads",
-  "Boiled Dishes",
-  "Soups",
-  "Curry Dishes",
-  "Pizza",
-  "Zone 7 Lunch Buffet",
-];
+  const foodCategories = [
+    "Breakfast",
+    "Roasts / Grills",
+    "Fried Dishes",
+    "Platters",
+    "A Little More",
+    "Tasty Bites",
+    "Salads",
+    "Boiled Dishes",
+    "Soups",
+    "Curry Dishes",
+    "Pizza",
+    "Zone 7 Lunch Buffet",
+  ];
 
-const drinkCategories = [
-  "Soft Drinks",
-  "Juice",
-  "Smoothies",
-  "Milkshakes",
-  "Hot Beverages",
-  "Beers",
-  "Whisky Bottles",
-  "Gins & liqueur Bottles",
-  "Tequila",
-  "Vodka",
-  "Cocktails",
-  "Rum",
-  "Wines",
-  "Sparkling Bottles",
-  "Champagne",
-  "Brandy & Cognac Bottles",
-  "Shots",
-];
+  const drinkCategories = [
+    "Soft Drinks",
+    "Juice",
+    "Smoothies",
+    "Milkshakes",
+    "Hot Beverages",
+    "Beers",
+    "Whisky Bottles",
+    "Gins & liqueur Bottles",
+    "Tequila",
+    "Vodka",
+    "Cocktails",
+    "Rum",
+    "Wines",
+    "Sparkling Bottles",
+    "Champagne",
+    "Brandy & Cognac Bottles",
+    "Shots",
+  ];
+    const addItem = (item) => {
+    const chosenAddons = selectedAddOns[item.name] || [];
 
-const addItem = (item) => {
-const chosenAddons = selectedAddOns[item.name] || [];
+    const addonTotal = chosenAddons.reduce(
+      (sum, addon) => sum + addon.price,
+      0
+    );
 
-const addonTotal =
-chosenAddons.reduce(
-(sum, addon) => sum + addon.price,
-0
-);
+    const finalItem = {
+      ...item,
+      addOns: chosenAddons,
+      price: item.price + addonTotal,
+      basePrice: item.price,
+    };
 
-const finalItem = {
-...item,
-addOns: chosenAddons,
-price: item.price + addonTotal,
-basePrice: item.price,
-};
+    setCart((prev) => {
+      const existing = prev.find(
+        (cartItem) =>
+          cartItem.name === finalItem.name &&
+          JSON.stringify(cartItem.addOns) === JSON.stringify(finalItem.addOns)
+      );
 
-setCart((prev) => {
-const existing = prev.find(
-(cartItem) =>
-cartItem.name === finalItem.name &&
-JSON.stringify(cartItem.addOns) ===
-JSON.stringify(finalItem.addOns)
-);
+      if (existing) {
+        return prev.map((cartItem) =>
+          cartItem === existing
+            ? { ...cartItem, qty: cartItem.qty + 1 }
+            : cartItem
+        );
+      }
 
-if (existing) {
-return prev.map((cartItem) =>
-cartItem === existing
-? {
-...cartItem,
-qty: cartItem.qty + 1,
-}
-: cartItem
-);
-}
+      return [...prev, { ...finalItem, qty: 1 }];
+    });
+  };
 
-return [...prev, { ...finalItem, qty: 1 }];
-});
-};
-
-  const changeQty = (name, amount) => {
+  const changeQty = (cartIndex, amount) => {
     setCart((prev) =>
       prev
-        .map((item) =>
-          item.name === name ? { ...item, qty: item.qty + amount } : item
+        .map((item, index) =>
+          index === cartIndex ? { ...item, qty: item.qty + amount } : item
         )
         .filter((item) => item.qty > 0)
     );
@@ -1559,110 +1553,87 @@ return [...prev, { ...finalItem, qty: 1 }];
 
   const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
 
-const filteredMenu = menu
-  .map((section) => ({
-    ...section,
-    items: section.items.filter((item) => {
-      const q = search.toLowerCase();
+  const selectedMenuSection = selectedCategory
+    ? menu.find((section) => section.category === selectedCategory)
+    : null;
 
-      return (
-        section.category.toLowerCase().includes(q) ||
-        item.name.toLowerCase().includes(q) ||
-        item.description.toLowerCase().includes(q)
-      );
-    }),
-  }))
-  .filter(
-    (section) =>
-      section.category.toLowerCase().includes(search.toLowerCase()) ||
-      section.items.length > 0
-  );
+  const filteredSelectedItems = selectedMenuSection
+    ? selectedMenuSection.items.filter((item) => {
+        const q = search.toLowerCase();
 
-const selectedMenuSection = selectedCategory
-  ? menu.find((section) => section.category === selectedCategory)
-  : null;
+        return (
+          selectedMenuSection.category.toLowerCase().includes(q) ||
+          item.name.toLowerCase().includes(q) ||
+          item.description.toLowerCase().includes(q)
+        );
+      })
+    : [];
+    const sendOrder = () => {
+    if (!table.trim()) {
+      alert("Please enter your table number first.");
+      return;
+    }
 
-const filteredSelectedItems = selectedMenuSection
-  ? selectedMenuSection.items.filter((item) => {
-      const q = search.toLowerCase();
+    if (cart.length === 0) {
+      alert("Please add at least one item.");
+      return;
+    }
 
-      return (
-        selectedMenuSection.category.toLowerCase().includes(q) ||
-        item.name.toLowerCase().includes(q) ||
-        item.description.toLowerCase().includes(q)
-      );
-    })
-  : [];
-const sendOrder = () => {
-  if (!table.trim()) {
-    alert("Please enter your table number first.");
-    return;
-  }
+    const orderText = cart
+      .map((item) => {
+        const addonsText =
+          item.addOns && item.addOns.length > 0
+            ? "\nAdd-Ons:\n" +
+              item.addOns
+                .map(
+                  (addon) =>
+                    `+ ${addon.name} — UGX ${addon.price.toLocaleString()}`
+                )
+                .join("\n")
+            : "";
 
-  if (cart.length === 0) {
-    alert("Please add at least one item.");
-    return;
-  }
+        return (
+          `${item.qty}× ${item.name} — UGX ${(
+            item.price * item.qty
+          ).toLocaleString()}` + addonsText
+        );
+      })
+      .join("\n\n");
 
-  const orderText = cart
-  .map((item) => {
-    const addonsText =
-      item.addOns && item.addOns.length > 0
-        ? "\nAdd-Ons:\n" +
-          item.addOns
-            .map(
-              (addon) =>
-                `+ ${addon.name} — UGX ${addon.price.toLocaleString()}`
-            )
-            .join("\n")
-        : "";
+    const message =
+      `🍽️ New Zone 7 Order\n\n` +
+      `Table: ${table}\n\n` +
+      `${orderText}\n\n` +
+      `Total: UGX ${total.toLocaleString()}\n\n` +
+      (notes ? `Notes: ${notes}\n\n` : "");
 
-    return (
-      `${item.qty}× ${item.name} — UGX ${(
-        item.price * item.qty
-      ).toLocaleString()}` + addonsText
+    const encodedMessage = encodeURIComponent(message);
+
+    window.open(
+      `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`,
+      "_blank"
     );
-  })
-  .join("\n\n");
-
-  const message =
-    `🍽️ New Zone 7 Order\n\n` +
-    `Table: ${table}\n\n` +
-    `${orderText}\n\n` +
-    `Total: UGX ${total.toLocaleString()}\n\n` +
-    (notes ? `Notes: ${notes}\n\n` : "");
-
-  const encodedMessage = encodeURIComponent(message);
-
-  window.open(
-    `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`,
-    "_blank"
-  );
-};
-
-  return (
+  };
+    return (
     <main className="min-h-screen bg-black text-white pb-56">
       <div className="mx-auto w-full max-w-md md:max-w-3xl">
         <section className="px-5 pt-8 pb-7 text-center border-b border-yellow-600/30 bg-gradient-to-b from-zinc-950 to-black">
-          <div className="mx-auto mb-5 h-28 w-28 rounded-full border border-yellow-500/60 bg-black flex items-center justify-center overflow-hidden shadow-lg shadow-yellow-500/10">
+          <div className="mx-auto mb-5 h-36 w-36 rounded-full border border-yellow-500/60 bg-black flex items-center justify-center overflow-hidden shadow-lg shadow-yellow-500/10">
             <img
               src="/zone7-logo.png"
               alt="Zone 7 Logo"
-              className="h-full w-full object-contain p-3"
+              className="h-full w-full object-contain p-2"
               onError={(e) => {
                 e.currentTarget.style.display = "none";
               }}
             />
-            <span className="text-yellow-400 text-xs font-black tracking-widest">
-              LOGO
-            </span>
           </div>
 
-          <h1 className="text-5xl font-black tracking-widest text-yellow-400 drop-shadow">
-            ZONE 7
+          <h1 className="text-3xl font-black tracking-wide text-yellow-400 drop-shadow">
+            Welcome to Zone 7
           </h1>
 
-          <p className="mt-3 text-sm tracking-[0.25em] text-gray-300">
+          <p className="mt-3 text-sm tracking-[0.18em] text-gray-300">
             FOOD · DRINKS · EVENTS
           </p>
 
@@ -1685,208 +1656,264 @@ const sendOrder = () => {
                 className="w-full rounded-xl px-4 py-4 bg-black border border-yellow-500/70 text-white outline-none placeholder:text-gray-500 focus:border-yellow-300"
               />
             </div>
-        {view === "category" && (
-            <div>
-              <label className="block text-yellow-400 font-bold mb-2">
-                Search Menu
-              </label>
 
-              <input
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search food, drinks, category, ingredients..."
-                className="w-full rounded-xl px-4 py-4 bg-black border border-zinc-700 text-white outline-none placeholder:text-gray-500 focus:border-yellow-400"
-              />
-            </div>
-                  )}
+            {view === "category" && (
+              <div>
+                <label className="block text-yellow-400 font-bold mb-2">
+                  Search Menu
+                </label>
+
+                <input
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  placeholder="Search food, drinks, category, ingredients..."
+                  className="w-full rounded-xl px-4 py-4 bg-black border border-zinc-700 text-white outline-none placeholder:text-gray-500 focus:border-yellow-400"
+                />
+              </div>
+            )}
           </div>
         </section>
+          <section ref={categoryRef} className="px-5 py-6 max-w-3xl mx-auto">
+          {view === "home" && (
+            <div className="space-y-4">
+              <button
+                onClick={() => setView("food")}
+                className="w-full bg-yellow-500 text-black font-black py-5 rounded-2xl text-xl"
+              >
+                View Food Menu
+              </button>
 
-        <section 
-            ref={categoryRef} className="px-5 py-6 max-w-3xl mx-auto">
-  {view === "home" && (
-    <div className="space-y-4">
-      <button
-        onClick={() => setView("food")}
-        className="w-full bg-yellow-500 text-black font-black py-5 rounded-2xl text-xl"
-      >
-        View Food Menu
-      </button>
-
-      <button
-        onClick={() => setView("drinks")}
-        className="w-full bg-yellow-500 text-black font-black py-5 rounded-2xl text-xl"
-      >
-        View Drinks Menu
-      </button>
-    </div>
-  )}
-
-  {view === "food" && (
-    <div>
-      <button onClick={() => setView("home")}>← Back</button>
-      <h2>Food Menu</h2>
-
-      {foodCategories.map((category) => (
-        <button
-          key={category}
-          onClick={() => {
-            setSelectedCategory(category);
-            setSearch("");
-            setView("category");
-            setTimeout(() => {
-  categoryRef.current?.scrollIntoView({
-    behavior: "smooth",
-    block: "start",
-  });
-}, 80);
-
-          }}
-          className="w-full mb-3 text-left"
-        >
-          {category}
-        </button>
-      ))}
-    </div>
-  )}
-
-  {view === "drinks" && (
-    <div>
-      <button onClick={() => setView("home")}>← Back</button>
-      <h2>Drinks Menu</h2>
-
-      {drinkCategories.map((category) => (
-        <button
-          key={category}
-          onClick={() => {
-            setSelectedCategory(category);
-            setSearch("");
-            setView("category");
-            setTimeout(() => {
-  categoryRef.current?.scrollIntoView({
-    behavior: "smooth",
-    block: "start",
-  });
-}, 80);
-
-          }}
-          className="w-full mb-3 text-left"
-        >
-          {category}
-        </button>
-      ))}
-    </div>
-  )}
-
-  {view === "category" && selectedMenuSection && (
-    <div>
-      <button
-        onClick={() => {
-          setSelectedCategory(null);
-          setSearch("");
-          setView(foodCategories.includes(selectedMenuSection.category) ? "food" : "drinks");
-        }}
-      >
-        ← Back to Categories
-      </button>
-
-      <h2>{selectedMenuSection.category}</h2>
-
-      {filteredSelectedItems.length === 0 ? (
-        <p className="text-center text-gray-400 py-10">No menu items found.</p>
-      ) : (
-        filteredSelectedItems.map((item) => (
-          <div
-            key={`${selectedMenuSection.category}-${item.name}-${item.price}`}
-            className="bg-zinc-950 border border-zinc-800 rounded-2xl p-4 shadow-lg"
-          >
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <h3 className="text-lg font-black text-white">{item.name}</h3>
-
-                {item.description && (
-                  <p className="text-gray-400 text-sm mt-1 leading-relaxed">
-                    {item.description}
-                  </p>
-                )}
-
-                <p className="text-yellow-300 font-bold text-sm mt-3">
-                  UGX {item.price.toLocaleString()}
-                </p>
-                {CATEGORIES_WITH_ADDONS.includes(selectedMenuSection.category) &&
-  openAddOns[item.name] && (
-  <div className="mt-4 rounded-xl border border-yellow-600/30 bg-black/40 p-3">
-    <p className="text-yellow-400 text-sm font-black mb-2">
-      Add-Ons <span className="text-gray-400 font-normal">(choose any)</span>
-    </p>
-
-  <div className="mt-3 space-y-3">
-  {ADD_ONS.map((addon) => {
-    const currentAddOns = selectedAddOns[item.name] || [];
-    const isChecked = currentAddOns.some(
-      (selected) => selected.name === addon.name
-    );
-
-    return (
-      <label
-        key={`${item.name}-${addon.name}`}
-        className="grid grid-cols-[24px_1fr_auto] items-center gap-3 text-sm"
-      >
-        <input
-          type="checkbox"
-          checked={isChecked}
-          onChange={() => {
-            setSelectedAddOns((prev) => {
-              const existing = prev[item.name] || [];
-
-              const updated = isChecked
-                ? existing.filter((selected) => selected.name !== addon.name)
-                : [...existing, addon];
-
-              return {
-                ...prev,
-                [item.name]: updated,
-              };
-            });
-          }}
-          className="h-5 w-5 accent-yellow-500"
-        />
-
-        <span className="text-gray-200">
-          {addon.name}
-        </span>
-
-        <span className="text-yellow-300 font-bold whitespace-nowrap">
-          UGX {addon.price.toLocaleString()}
-        </span>
-      </label>
-    );
-  })}
-</div>
-
-             <button
-  onClick={() => {
-    if (CATEGORIES_WITH_ADDONS.includes(selectedMenuSection.category)) {
-      setOpenAddOns((prev) => ({
-        ...prev,
-        [item.name]: !prev[item.name],
-      }));
-    } else {
-      addItem(item);
-    }
-  }}
-  className="bg-yellow-500 hover:bg-yellow-400 text-black font-black px-5 py-3 rounded-xl shrink-0"
->
-  {CATEGORIES_WITH_ADDONS.includes(selectedMenuSection.category)
-    ? openAddOns[item.name]
-      ? "Close"
-      : "Add"
-    : "Add"}
-</button>
+              <button
+                onClick={() => setView("drinks")}
+                className="w-full bg-yellow-500 text-black font-black py-5 rounded-2xl text-xl"
+              >
+                View Drinks Menu
+              </button>
             </div>
-      )}
-      </div>
+          )}
 
+          {view === "food" && (
+            <div>
+              <button
+                onClick={() => setView("home")}
+                className="mb-4 text-yellow-400 font-bold"
+              >
+                ← Back
+              </button>
+
+              <h2 className="text-3xl font-black text-yellow-400 mb-5">
+                Food Menu
+              </h2>
+
+              {foodCategories.map((category) => (
+                <button
+                  key={category}
+                  onClick={() => {
+                    setSelectedCategory(category);
+                    setSearch("");
+                    setView("category");
+                    setTimeout(() => {
+                      categoryRef.current?.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start",
+                      });
+                    }, 80);
+                  }}
+                  className="w-full mb-3 text-left bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-4 font-bold"
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {view === "drinks" && (
+            <div>
+              <button
+                onClick={() => setView("home")}
+                className="mb-4 text-yellow-400 font-bold"
+              >
+                ← Back
+              </button>
+
+              <h2 className="text-3xl font-black text-yellow-400 mb-5">
+                Drinks Menu
+              </h2>
+
+              {drinkCategories.map((category) => (
+                <button
+                  key={category}
+                  onClick={() => {
+                    setSelectedCategory(category);
+                    setSearch("");
+                    setView("category");
+                    setTimeout(() => {
+                      categoryRef.current?.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start",
+                      });
+                    }, 80);
+                  }}
+                  className="w-full mb-3 text-left bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-4 font-bold"
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
+          )}
+          {view === "category" && selectedMenuSection && (
+            <div>
+              <button
+                onClick={() => {
+                  setSelectedCategory(null);
+                  setSearch("");
+                  setView(
+                    foodCategories.includes(selectedMenuSection.category)
+                      ? "food"
+                      : "drinks"
+                  );
+                }}
+                className="mb-4 text-yellow-400 font-bold"
+              >
+                ← Back to Categories
+              </button>
+
+              <h2 className="text-3xl font-black text-yellow-400 mb-5">
+                {selectedMenuSection.category}
+              </h2>
+
+              {filteredSelectedItems.length === 0 ? (
+                <p className="text-center text-gray-400 py-10">
+                  No menu items found.
+                </p>
+              ) : (
+                filteredSelectedItems.map((item) => (
+                  <div
+                    key={`${selectedMenuSection.category}-${item.name}-${item.price}`}
+                    className="bg-zinc-950 border border-zinc-800 rounded-2xl p-4 shadow-lg mb-4"
+                  >
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex-1">
+                        <h3 className="text-lg font-black text-white">
+                          {item.name}
+                        </h3>
+
+                        {item.description && (
+                          <p className="text-gray-400 text-sm mt-1 leading-relaxed">
+                            {item.description}
+                          </p>
+                        )}
+
+                        <p className="text-yellow-300 font-bold text-sm mt-3">
+                          UGX {item.price.toLocaleString()}
+                        </p>
+
+                        {CATEGORIES_WITH_ADDONS.includes(
+                          selectedMenuSection.category
+                        ) &&
+                          openAddOns[item.name] && (
+                            <div className="mt-4 rounded-xl border border-yellow-600/30 bg-black/40 p-3">
+                              <p className="text-yellow-400 text-sm font-black mb-2">
+                                Add-Ons{" "}
+                                <span className="text-gray-400 font-normal">
+                                  (choose any)
+                                </span>
+                              </p>
+
+                              <div className="mt-3 space-y-3">
+                                {ADD_ONS.map((addon) => {
+                                  const currentAddOns =
+                                    selectedAddOns[item.name] || [];
+                                  const isChecked = currentAddOns.some(
+                                    (selected) =>
+                                      selected.name === addon.name
+                                  );
+
+                                  return (
+                                    <label
+                                      key={`${item.name}-${addon.name}`}
+                                      className="grid grid-cols-[24px_1fr_auto] items-center gap-3 text-sm"
+                                    >
+                                      <input
+                                        type="checkbox"
+                                        checked={isChecked}
+                                        onChange={() => {
+                                          setSelectedAddOns((prev) => {
+                                            const existing =
+                                              prev[item.name] || [];
+
+                                            const updated = isChecked
+                                              ? existing.filter(
+                                                  (selected) =>
+                                                    selected.name !==
+                                                    addon.name
+                                                )
+                                              : [...existing, addon];
+
+                                            return {
+                                              ...prev,
+                                              [item.name]: updated,
+                                            };
+                                          });
+                                        }}
+                                        className="h-5 w-5 accent-yellow-500"
+                                      />
+
+                                      <span className="text-gray-200">
+                                        {addon.name}
+                                      </span>
+
+                                      <span className="text-yellow-300 font-bold whitespace-nowrap">
+                                        UGX {addon.price.toLocaleString()}
+                                      </span>
+                                    </label>
+                                  );
+                                })}
+                              </div>
+
+                              <button
+                                onClick={() => addItem(item)}
+                                className="mt-4 w-full bg-yellow-500 hover:bg-yellow-400 text-black font-black py-3 rounded-xl"
+                              >
+                                Add to Order
+                              </button>
+                            </div>
+                          )}
+                      </div>
+
+                      <button
+                        onClick={() => {
+                          if (
+                            CATEGORIES_WITH_ADDONS.includes(
+                              selectedMenuSection.category
+                            )
+                          ) {
+                            setOpenAddOns((prev) => ({
+                              ...prev,
+                              [item.name]: !prev[item.name],
+                            }));
+                          } else {
+                            addItem(item);
+                          }
+                        }}
+                        className="bg-yellow-500 hover:bg-yellow-400 text-black font-black px-5 py-3 rounded-xl shrink-0"
+                      >
+                        {CATEGORIES_WITH_ADDONS.includes(
+                          selectedMenuSection.category
+                        )
+                          ? openAddOns[item.name]
+                            ? "Close"
+                            : "Add"
+                          : "Add"}
+                      </button>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          )}
+        </section>
+      </div>
       <section className="fixed bottom-0 left-0 right-0 bg-zinc-950 border-t border-yellow-600/40 p-4">
         <div className="max-w-md md:max-w-3xl mx-auto">
           <div className="max-h-36 overflow-y-auto mb-3 pr-1">
@@ -1895,30 +1922,39 @@ const sendOrder = () => {
                 Cart is empty
               </p>
             ) : (
-              cart.map((item) => (
+              cart.map((item, index) => (
                 <div
-                  key={item.name}
-                  className="flex justify-between items-center gap-3 mb-2 text-sm bg-black/50 rounded-xl px-3 py-2"
+                  key={`${item.name}-${index}`}
+                  className="mb-2 text-sm bg-black/50 rounded-xl px-3 py-2"
                 >
-                  <span>
-                    {item.qty}× {item.name}
-                  </span>
+                  <div className="flex justify-between items-center gap-3">
+                    <span>
+                      {item.qty}× {item.name}
+                    </span>
 
-                  <div className="flex gap-2 items-center">
-                    <button
-                      onClick={() => changeQty(item.name, -1)}
-                      className="h-8 w-8 bg-zinc-800 rounded-lg font-black"
-                    >
-                      −
-                    </button>
+                    <div className="flex gap-2 items-center">
+                      <button
+                        onClick={() => changeQty(index, -1)}
+                        className="h-8 w-8 bg-zinc-800 rounded-lg font-black"
+                      >
+                        −
+                      </button>
 
-                    <button
-                      onClick={() => changeQty(item.name, 1)}
-                      className="h-8 w-8 bg-zinc-800 rounded-lg font-black"
-                    >
-                      +
-                    </button>
+                      <button
+                        onClick={() => changeQty(index, 1)}
+                        className="h-8 w-8 bg-zinc-800 rounded-lg font-black"
+                      >
+                        +
+                      </button>
+                    </div>
                   </div>
+
+                  {item.addOns && item.addOns.length > 0 && (
+                    <div className="mt-2 text-xs text-gray-400">
+                      Add-ons:{" "}
+                      {item.addOns.map((addon) => addon.name).join(", ")}
+                    </div>
+                  )}
                 </div>
               ))
             )}
@@ -1941,6 +1977,4 @@ const sendOrder = () => {
       </section>
     </main>
   );
-
-
-
+}
