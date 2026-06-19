@@ -2,7 +2,7 @@
 
 import { useState, useRef } from "react";
 
-const WHATSAPP_NUMBER = "256771753680";
+const WHATSAPP_NUMBER = "256779925316";
 const ADD_ONS = [
   { name: "Chips", price: 10000 },
   { name: "Rice", price: 9000 },
@@ -1829,42 +1829,54 @@ export default function Zone7OrderingPage() {
                                       selected.name === addon.name
                                   );
 
-                                  return (
-                                   <label
-  key={`${item.name}-${addon.name}`}
-  className="flex items-start gap-3 py-3 cursor-pointer"
->
-  <input
-    type="checkbox"
-    checked={isChecked}
-    onChange={() => {
-      setSelectedAddOns((prev) => {
-        const existing = prev[item.name] || [];
+                                 return (
+  <label
+    key={`${item.name}-${addon.name}`}
+    className="flex items-start gap-3 py-3 cursor-pointer"
+  >
+    <input
+      type="checkbox"
+      checked={isChecked}
+      onChange={() => {
+        setSelectedAddOns((prev) => {
+          const existing = prev[item.name] || [];
 
-        const updated = isChecked
-          ? existing.filter((selected) => selected.name !== addon.name)
-          : [...existing, addon];
+          const updated = isChecked
+            ? existing.filter((selected) => selected.name !== addon.name)
+            : [...existing, addon];
 
-        return {
-          ...prev,
-          [item.name]: updated,
-        };
-      });
-    }}
-    className="mt-1 h-5 w-5 accent-yellow-500"
-  />
+          return {
+            ...prev,
+            [item.name]: updated,
+          };
+        });
+      }}
+      className="sr-only"
+    />
 
-  <div>
-    <p className="text-yellow-300 font-black text-lg leading-tight">
-      {addon.name}
-    </p>
+    <span
+      className={`mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded border ${
+        isChecked
+          ? "border-yellow-400 bg-yellow-500"
+          : "border-yellow-600 bg-black"
+      }`}
+    >
+      {isChecked && (
+        <span className="text-xs font-black text-black">✓</span>
+      )}
+    </span>
 
-    <p className="text-white text-sm mt-1">
-      UGX {addon.price.toLocaleString()}
-    </p>
-  </div>
-</label>
-                                  );
+    <div>
+      <p className="text-yellow-300 font-black text-lg leading-tight">
+        {addon.name}
+      </p>
+
+      <p className="text-white text-sm mt-1">
+        UGX {addon.price.toLocaleString()}
+      </p>
+    </div>
+  </label>
+);
                                 })}
                               </div>
 
