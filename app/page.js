@@ -1832,7 +1832,7 @@ export default function Zone7OrderingPage() {
                                   return (
        <label
   key={`${item.name}-${addon.name}`}
-  className="grid grid-cols-[22px_1fr_auto] items-center gap-3 py-1 text-sm"
+ className="grid grid-cols-[22px_1fr_auto] items-center gap-3 py-1 text-sm cursor-pointer"
 >
  <span
   className={`h-5 w-5 shrink-0 rounded border flex items-center justify-center ${
