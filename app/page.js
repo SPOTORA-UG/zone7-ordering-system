@@ -1886,7 +1886,6 @@ const sendOrder = () => {
             </div>
       )}
     </div>
-  )}
 </section>
       </div>
 
