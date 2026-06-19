@@ -1884,7 +1884,6 @@ const sendOrder = () => {
     : "Add"}
 </button>
             </div>
-          </div>
         ))
       )}
     </div>
