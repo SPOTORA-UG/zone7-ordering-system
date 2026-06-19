@@ -2,7 +2,7 @@
 
 import { useState, useRef } from "react";
 
-const WHATSAPP_NUMBER = "256779925316";
+const WHATSAPP_NUMBER = "256771753680";
 const ADD_ONS = [
   { name: "Chips", price: 10000 },
   { name: "Rice", price: 9000 },
@@ -1828,11 +1828,10 @@ export default function Zone7OrderingPage() {
                                     (selected) =>
                                       selected.name === addon.name
                                   );
-
-                                 return (
+                                return (
   <label
     key={`${item.name}-${addon.name}`}
-    className="flex items-start gap-3 py-3 cursor-pointer"
+    className="flex items-center gap-3 py-3 cursor-pointer"
   >
     <input
       type="checkbox"
@@ -1855,10 +1854,10 @@ export default function Zone7OrderingPage() {
     />
 
     <span
-      className={`mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded border ${
+      className={`flex h-5 w-5 shrink-0 items-center justify-center rounded border-2 ${
         isChecked
-          ? "border-yellow-400 bg-yellow-500"
-          : "border-yellow-600 bg-black"
+          ? "border-yellow-400 bg-yellow-400"
+          : "border-yellow-500 bg-black"
       }`}
     >
       {isChecked && (
@@ -1866,14 +1865,14 @@ export default function Zone7OrderingPage() {
       )}
     </span>
 
-    <div>
-      <p className="text-yellow-300 font-black text-lg leading-tight">
+    <div className="flex items-center gap-2">
+      <span className="text-yellow-400 font-black text-lg">
         {addon.name}
-      </p>
+      </span>
 
-      <p className="text-white text-sm mt-1">
+      <span className="text-white font-semibold text-sm">
         UGX {addon.price.toLocaleString()}
-      </p>
+      </span>
     </div>
   </label>
 );
