@@ -1817,62 +1817,52 @@ const sendOrder = () => {
   openAddOns[item.name] && (
   <div className="mt-4 rounded-xl border border-yellow-600/30 bg-black/40 p-3">
     <p className="text-yellow-400 text-sm font-black mb-2">
-      Add-Ons:
+      Add-Ons <span className="text-gray-400 font-normal">(choose any)</span>
     </p>
 
-    <div className="grid gap-2">
-      {ADD_ONS.map((addon) => {
-        const currentAddOns = selectedAddOns[item.name] || [];
-        const isChecked = currentAddOns.some(
-          (selected) => selected.name === addon.name
-        );
+  <div className="mt-3 space-y-3">
+  {ADD_ONS.map((addon) => {
+    const currentAddOns = selectedAddOns[item.name] || [];
+    const isChecked = currentAddOns.some(
+      (selected) => selected.name === addon.name
+    );
 
-        return (
-         <label
-  key={`${item.name}-${addon.name}`}
-  className="flex items-center justify-between gap-3 py-2 text-sm"
->
-  <span className="flex items-center gap-3 text-gray-200">
-    <input
-      type="checkbox"
-      checked={isChecked}
-      onChange={() => {
-        setSelectedAddOns((prev) => {
-          const existing = prev[item.name] || [];
+    return (
+      <label
+        key={`${item.name}-${addon.name}`}
+        className="grid grid-cols-[24px_1fr_auto] items-center gap-3 text-sm"
+      >
+        <input
+          type="checkbox"
+          checked={isChecked}
+          onChange={() => {
+            setSelectedAddOns((prev) => {
+              const existing = prev[item.name] || [];
 
-          const updated = isChecked
-            ? existing.filter((selected) => selected.name !== addon.name)
-            : [...existing, addon];
+              const updated = isChecked
+                ? existing.filter((selected) => selected.name !== addon.name)
+                : [...existing, addon];
 
-          return {
-            ...prev,
-            [item.name]: updated,
-          };
-        });
-      }}
-      className="h-5 w-5 shrink-0 accent-yellow-500"
-    />
+              return {
+                ...prev,
+                [item.name]: updated,
+              };
+            });
+          }}
+          className="h-5 w-5 accent-yellow-500"
+        />
 
-    <span>{addon.name}</span>
-  </span>
+        <span className="text-gray-200">
+          {addon.name}
+        </span>
 
-  <span className="text-yellow-300 font-bold whitespace-nowrap">
-    + UGX {addon.price.toLocaleString()}
-  </span>
-</label>
-        );
-      })}
-<button
-  onClick={() => addItem(item)}
-  className="mt-4 w-full bg-yellow-500 hover:bg-yellow-400 text-black font-black py-3 rounded-xl"
->
-  Add to Order
-</button>
-    </div>
-  </div>
-)}
-  
-              </div>
+        <span className="text-yellow-300 font-bold whitespace-nowrap">
+          UGX {addon.price.toLocaleString()}
+        </span>
+      </label>
+    );
+  })}
+</div>
 
              <button
   onClick={() => {
