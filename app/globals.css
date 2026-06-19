@@ -37,8 +37,8 @@ section {
 
 main > div > section:first-child {
   text-align: center;
-  padding-top: 70px;
-  padding-bottom: 45px;
+  padding-top: 40px;
+  padding-bottom: 32px;
   border-bottom: 1px solid rgba(247, 201, 72, 0.28);
   background:
     radial-gradient(circle at top, rgba(247, 201, 72, 0.08), transparent 38%),
@@ -60,7 +60,7 @@ img[alt="Zone 7 Logo"] + span {
 
 h1 {
   color: #f7c948;
-  font-size: 56px;
+  font-size: 40px;
   letter-spacing: 12px;
   margin: 0;
   font-weight: 900;
