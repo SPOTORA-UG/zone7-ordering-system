@@ -1834,25 +1834,35 @@ export default function Zone7OrderingPage() {
   key={`${item.name}-${addon.name}`}
   className="grid grid-cols-[22px_1fr_auto] items-center gap-3 py-1 text-sm"
 >
-  <input
-    type="checkbox"
-    checked={isChecked}
-    onChange={() => {
-      setSelectedAddOns((prev) => {
-        const existing = prev[item.name] || [];
+ <span
+  className={`h-5 w-5 shrink-0 rounded border flex items-center justify-center ${
+    isChecked
+      ? "bg-yellow-500 border-yellow-400"
+      : "bg-black border-yellow-600"
+  }`}
+>
+  {isChecked && <span className="text-black text-xs font-black">✓</span>}
+</span>
 
-        const updated = isChecked
-          ? existing.filter((selected) => selected.name !== addon.name)
-          : [...existing, addon];
+<input
+  type="checkbox"
+  checked={isChecked}
+  onChange={() => {
+    setSelectedAddOns((prev) => {
+      const existing = prev[item.name] || [];
 
-        return {
-          ...prev,
-          [item.name]: updated,
-        };
-      });
-    }}
-    className="h-5 w-5 shrink-0 appearance-none rounded border border-yellow-600 bg-black checked:bg-yellow-500 checked:border-yellow-400"
-  />
+      const updated = isChecked
+        ? existing.filter((selected) => selected.name !== addon.name)
+        : [...existing, addon];
+
+      return {
+        ...prev,
+        [item.name]: updated,
+      };
+    });
+  }}
+  className="hidden"
+/>
 
   <span className="text-gray-200">{addon.name}</span>
 
