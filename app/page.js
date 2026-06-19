@@ -1885,8 +1885,6 @@ const sendOrder = () => {
 </button>
             </div>
       )}
-    </div>
-</section>
       </div>
 
       <section className="fixed bottom-0 left-0 right-0 bg-zinc-950 border-t border-yellow-600/40 p-4">
