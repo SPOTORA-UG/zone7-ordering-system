@@ -1807,97 +1807,82 @@ export default function Zone7OrderingPage() {
                         <p className="text-yellow-300 font-bold text-sm mt-3">
                           UGX {item.price.toLocaleString()}
                         </p>
-{CATEGORIES_WITH_ADDONS.includes(
-  selectedMenuSection.category
-) &&
-  openAddOns[item.name] && (
-    <div className="mt-4 rounded-xl border border-yellow-600/30 bg-black/40 p-3">
+                        {CATEGORIES_WITH_ADDONS.includes(
+                          selectedMenuSection.category
+                        ) &&
+                          openAddOns[item.name] && (
+                            <div className="mt-4 rounded-xl border border-yellow-600/30 bg-black/40 p-3">
+                              <p className="text-yellow-400 text-sm font-black mb-2">
+                                Add-Ons{" "}
+                                <span className="text-gray-400 font-normal">
+                                  (choose any)
+                                </span>
+                              </p>
 
-      <p className="text-yellow-400 text-sm font-black mb-2">
-        Add-Ons{" "}
-        <span className="text-gray-400 font-normal">
-          (choose any)
-        </span>
-      </p>
+                              <div className="mt-3 space-y-3">
+                                {ADD_ONS.map((addon) => {
+                                  const currentAddOns =
+                                    selectedAddOns[item.name] || [];
 
-      <div className="mt-3 space-y-3">
+                                  const isChecked = currentAddOns.some(
+                                    (selected) =>
+                                      selected.name === addon.name
+                                  );
 
-        {ADD_ONS.map((addon) => {
-          const currentAddOns =
-            selectedAddOns[item.name] || [];
+                                  return (
+                                    <label
+                                      key={`${item.name}-${addon.name}`}
+                                      className="grid grid-cols-[28px_1fr] gap-3 py-3 cursor-pointer"
+                                    >
+                                      <input
+                                        type="checkbox"
+                                        checked={isChecked}
+                                        onChange={() => {
+                                          setSelectedAddOns((prev) => {
+                                            const existing =
+                                              prev[item.name] || [];
 
-          const isChecked =
-            currentAddOns.some(
-              (selected) =>
-                selected.name === addon.name
-            );
+                                            const updated = isChecked
+                                              ? existing.filter(
+                                                  (selected) =>
+                                                    selected.name !==
+                                                    addon.name
+                                                )
+                                              : [...existing, addon];
 
-          return (
-            <label
-              key={`${item.name}-${addon.name}`}
-              className="grid grid-cols-[28px_1fr] gap-3 py-3 cursor-pointer"
-            >
+                                            return {
+                                              ...prev,
+                                              [item.name]: updated,
+                                            };
+                                          });
+                                        }}
+                                        className="mt-1 h-5 w-5 accent-yellow-500"
+                                      />
 
-              <input
-                type="checkbox"
-                checked={isChecked}
-                onChange={() => {
-                  setSelectedAddOns((prev) => {
-                    const existing =
-                      prev[item.name] || [];
+                                      <div>
+                                        <p className="text-yellow-300 font-black text-lg">
+                                          {addon.name}
+                                        </p>
 
-                    const updated =
-                      isChecked
-                        ? existing.filter(
-                            (selected) =>
-                              selected.name !==
-                              addon.name
-                          )
-                        : [
-                            ...existing,
-                            addon,
-                          ];
+                                        <p className="text-white text-sm mt-1">
+                                          UGX{" "}
+                                          {addon.price.toLocaleString()}
+                                        </p>
+                                      </div>
+                                    </label>
+                                  );
+                                })}
+                              </div>
 
-                    return {
-                      ...prev,
-                      [item.name]:
-                        updated,
-                    };
-                  });
-                }}
-                className="mt-1 h-5 w-5 accent-yellow-500"
-              />
-
-              <div>
-
-                <p className="text-yellow-300 font-black text-lg">
-                  {addon.name}
-                </p>
-
-                <p className="text-white text-sm mt-1">
-                  UGX{" "}
-                  {addon.price.toLocaleString()}
-                </p>
-
-              </div>
-
-            </label>
-          );
-        })}
-
-      </div>
-
-      <button
-        onClick={() => addItem(item)}
-        className="mt-4 w-full bg-yellow-500 hover:bg-yellow-400 text-black font-black py-3 rounded-xl"
-      >
-        Add to Order
-      </button>
-
-    </div>
-)}
-
-                        
+                              <button
+                                onClick={() => addItem(item)}
+                                className="mt-4 w-full bg-yellow-500 hover:bg-yellow-400 text-black font-black py-3 rounded-xl"
+                              >
+                                Add to Order
+                              </button>
+                            </div>
+                          )}
+                      </div>
 
                       <button
                         onClick={() => {
@@ -1932,6 +1917,7 @@ export default function Zone7OrderingPage() {
           )}
         </section>
       </div>
+
       <section className="fixed bottom-0 left-0 right-0 bg-zinc-950 border-t border-yellow-600/40 p-4">
         <div className="max-w-md md:max-w-3xl mx-auto">
           <div className="max-h-36 overflow-y-auto mb-3 pr-1">
