@@ -1821,57 +1821,55 @@ export default function Zone7OrderingPage() {
                               </p>
 
                               <div className="mt-3 space-y-3">
-                                {ADD_ONS.map((addon) => {
-                                  const currentAddOns =
-                                    selectedAddOns[item.name] || [];
-                                  const isChecked = currentAddOns.some(
-                                    (selected) =>
-                                      selected.name === addon.name
-                                  );
+                               {ADD_ONS.map((addon) => {
+  const currentAddOns = selectedAddOns[item.name] || [];
 
-                                  return (
-       <label
-  key={`${item.name}-${addon.name}`}
- className="grid grid-cols-[22px_1fr_auto] items-center gap-3 py-1 text-sm cursor-pointer"
->
- <span
-  className={`h-5 w-5 shrink-0 rounded border flex items-center justify-center ${
-    isChecked
-      ? "bg-yellow-500 border-yellow-400"
-      : "bg-black border-yellow-600"
-  }`}
->
-  {isChecked && <span className="text-black text-xs font-black">✓</span>}
-</span>
+  const isChecked = currentAddOns.some(
+    (selected) => selected.name === addon.name
+  );
 
-<input
-  type="checkbox"
-  checked={isChecked}
-  onChange={() => {
-    setSelectedAddOns((prev) => {
-      const existing = prev[item.name] || [];
+  return (
+    <div
+      key={`${item.name}-${addon.name}`}
+      className="flex items-center justify-between py-2"
+    >
+      <label className="flex items-center gap-3 cursor-pointer flex-1">
 
-      const updated = isChecked
-        ? existing.filter((selected) => selected.name !== addon.name)
-        : [...existing, addon];
+        <input
+          type="checkbox"
+          checked={isChecked}
+          onChange={() => {
+            setSelectedAddOns((prev) => {
+              const existing = prev[item.name] || [];
 
-      return {
-        ...prev,
-        [item.name]: updated,
-      };
-    });
-  }}
-  className="hidden"
-/>
+              const updated = isChecked
+                ? existing.filter(
+                    (selected) =>
+                      selected.name !== addon.name
+                  )
+                : [...existing, addon];
 
-  <span className="text-gray-200">{addon.name}</span>
+              return {
+                ...prev,
+                [item.name]: updated,
+              };
+            });
+          }}
+          className="h-5 w-5 accent-yellow-500"
+        />
 
-  <span className="text-yellow-300 font-bold whitespace-nowrap">
-    UGX {addon.price.toLocaleString()}
-  </span>
-</label>
-                                  );
-                                })}
+        <span className="text-gray-100">
+          {addon.name}
+        </span>
+
+      </label>
+
+      <span className="text-yellow-300 font-bold">
+        UGX {addon.price.toLocaleString()}
+      </span>
+    </div>
+  );
+})}
                               </div>
 
                               <button
