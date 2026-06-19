@@ -1830,46 +1830,40 @@ export default function Zone7OrderingPage() {
                                   );
 
                                   return (
-                                    <label
-                                      key={`${item.name}-${addon.name}`}
-                                      className="grid grid-cols-[28px_1fr] gap-3 py-3 cursor-pointer"
-                                    >
-                                      <input
-                                        type="checkbox"
-                                        checked={isChecked}
-                                        onChange={() => {
-                                          setSelectedAddOns((prev) => {
-                                            const existing =
-                                              prev[item.name] || [];
+                                   <label
+  key={`${item.name}-${addon.name}`}
+  className="flex items-start gap-3 py-3 cursor-pointer"
+>
+  <input
+    type="checkbox"
+    checked={isChecked}
+    onChange={() => {
+      setSelectedAddOns((prev) => {
+        const existing = prev[item.name] || [];
 
-                                            const updated = isChecked
-                                              ? existing.filter(
-                                                  (selected) =>
-                                                    selected.name !==
-                                                    addon.name
-                                                )
-                                              : [...existing, addon];
+        const updated = isChecked
+          ? existing.filter((selected) => selected.name !== addon.name)
+          : [...existing, addon];
 
-                                            return {
-                                              ...prev,
-                                              [item.name]: updated,
-                                            };
-                                          });
-                                        }}
-                                        className="mt-1 h-5 w-5 accent-yellow-500"
-                                      />
+        return {
+          ...prev,
+          [item.name]: updated,
+        };
+      });
+    }}
+    className="mt-1 h-5 w-5 accent-yellow-500"
+  />
 
-                                      <div>
-                                        <p className="text-yellow-300 font-black text-lg">
-                                          {addon.name}
-                                        </p>
+  <div>
+    <p className="text-yellow-300 font-black text-lg leading-tight">
+      {addon.name}
+    </p>
 
-                                        <p className="text-white text-sm mt-1">
-                                          UGX{" "}
-                                          {addon.price.toLocaleString()}
-                                        </p>
-                                      </div>
-                                    </label>
+    <p className="text-white text-sm mt-1">
+      UGX {addon.price.toLocaleString()}
+    </p>
+  </div>
+</label>
                                   );
                                 })}
                               </div>
