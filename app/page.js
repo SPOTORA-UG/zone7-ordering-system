@@ -1630,16 +1630,18 @@ export default function Zone7OrderingPage() {
           </div>
 
           <h1 className="text-3xl font-black tracking-wide text-yellow-400 drop-shadow">
-            Welcome to Zone 7
+            Welcome to Zone 7 !
           </h1>
 
-          <p className="mt-3 text-sm tracking-[0.18em] text-gray-300">
-            FOOD · DRINKS · EVENTS
-          </p>
 
-          <p className="mt-5 text-yellow-300 font-semibold">
-            QR Ordering by Spotora
-          </p>
+                <p
+                className="mt-4 text-yellow-300 text-4xl"
+  style={{
+    fontFamily: '"Italianno", cursive',
+  }}
+>
+  QR Ordering by Spotora
+</p>
         </section>
 
         <section className="px-5 py-5 bg-zinc-950/95 sticky top-0 z-20 border-b border-yellow-600/30 backdrop-blur">
