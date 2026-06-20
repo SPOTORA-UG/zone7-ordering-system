@@ -1634,10 +1634,14 @@ export default function Zone7OrderingPage() {
           </h1>
 
 
-                <p
-                className="mt-4 text-yellow-300 text-4xl"
+             
+<p
+  className="mt-4 text-yellow-300 text-2xl tracking-wide"
   style={{
-    fontFamily: '"Italianno", cursive',
+    fontFamily: '"Cormorant Garamond", serif',
+    fontStyle: "italic",
+    fontWeight: 600,
+    letterSpacing: "0.08em",
   }}
 >
   By Spotora
