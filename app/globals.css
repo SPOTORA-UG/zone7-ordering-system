@@ -15,7 +15,7 @@ body {
 
 main {
   min-height: 100vh;
-  padding-bottom: 270px;
+  padding-bottom: 40px;
   background:
     radial-gradient(circle at top, rgba(247, 201, 72, 0.1), transparent 32%),
     radial-gradient(circle at bottom, rgba(247, 201, 72, 0.05), transparent 35%),
@@ -403,3 +403,7 @@ input[type="checkbox"] {
   height: 0 !important;
   pointer-events: none !important;
 }
+main:has(> section:last-child) {
+  padding-bottom: 270px;
+}
+
