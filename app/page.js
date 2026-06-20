@@ -1630,7 +1630,7 @@ export default function Zone7OrderingPage() {
           </div>
 
           <h1 className="text-3xl font-black tracking-wide text-yellow-400 drop-shadow">
-            Welcome to Zone 7 !
+            Welcome!
           </h1>
 
 
@@ -1640,7 +1640,7 @@ export default function Zone7OrderingPage() {
     fontFamily: '"Italianno", cursive',
   }}
 >
-  QR Ordering by Spotora
+  By Spotora
 </p>
         </section>
 
