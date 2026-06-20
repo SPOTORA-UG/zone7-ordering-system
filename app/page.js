@@ -1917,7 +1917,7 @@ export default function Zone7OrderingPage() {
           )}
         </section>
       </div>
-
+        {cart.length > 0 && (
       <section className="fixed bottom-0 left-0 right-0 bg-zinc-950 border-t border-yellow-600/40 p-4">
         <div className="max-w-md md:max-w-3xl mx-auto">
           <div className="max-h-36 overflow-y-auto mb-3 pr-1">
@@ -1979,6 +1979,7 @@ export default function Zone7OrderingPage() {
           </button>
         </div>
       </section>
+            )}
     </main>
   );
 }
