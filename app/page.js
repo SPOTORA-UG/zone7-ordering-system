@@ -2,7 +2,7 @@
 
 import { useState, useRef } from "react";
 
-const WHATSAPP_NUMBER = "256771753680";
+const WHATSAPP_NUMBER = "256742156083";
 const ADD_ONS = [
   { name: "Chips", price: 10000 },
   { name: "Rice", price: 9000 },
