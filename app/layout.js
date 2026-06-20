@@ -12,7 +12,7 @@ maximumScale: 1,
 };
 
 export default function RootLayout({ children }) {
-return ( <html lang="en"><html lang="en">
+return ( <html lang="en">
   <head>
     <link
       rel="preconnect"
