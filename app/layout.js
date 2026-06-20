@@ -25,10 +25,10 @@ return ( <html lang="en">
       crossOrigin=""
     />
 
-    <link
-      href="https://fonts.googleapis.com/css2?family=Italianno&display=swap"
-      rel="stylesheet"
-    />
+   <link
+  href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,600&display=swap"
+  rel="stylesheet"
+/>
   </head> 
         <body>{children}</body> </html>
 );
