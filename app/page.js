@@ -1626,8 +1626,9 @@ export default function Zone7OrderingPage() {
     <main className="min-h-screen bg-black text-white pb-56">
       <div className="mx-auto w-full max-w-md md:max-w-3xl">
         <section className="px-5 pt-8 pb-7 text-center border-b border-yellow-600/30 bg-gradient-to-b from-zinc-950 to-black">
-          <div className="mx-auto mb-5 h-36 w-36 rounded-full border border-yellow-500/60 bg-black flex items-center justify-center overflow-hidden shadow-lg shadow-yellow-500/10">
-            <img
+       <div className="mx-auto mb-4 flex items-center justify-center">
+
+      <img
               src="/zone7-logo.png"
               alt="Zone 7 Logo"
               className="h-full w-full object-contain p-2"
