@@ -44,14 +44,14 @@ main > div > section:first-child {
     radial-gradient(circle at top, rgba(247, 201, 72, 0.08), transparent 38%),
     linear-gradient(180deg, #050505 0%, #020202 100%);
 }
-
 img[alt="Zone 7 Logo"] {
   width: 220px !important;
   height: 220px !important;
   object-fit: contain;
   display: block;
-  margin: 0 auto 25px;
-  filter: drop-shadow(0 0 18px rgba(247, 201, 72, 0.16));
+  margin: 0 auto 14px;
+  background: transparent !important;
+  filter: drop-shadow(0 0 18px rgba(255, 255, 255, 0.08));
 }
 
 img[alt="Zone 7 Logo"] + span {
