@@ -1568,6 +1568,7 @@ export default function Zone7OrderingPage() {
         );
       })
     : [];
+  
     const sendOrder = () => {
     if (!table.trim()) {
       alert("Please enter your table number first.");
@@ -1580,25 +1581,32 @@ export default function Zone7OrderingPage() {
     }
 
     const orderText = cart
-      .map((item) => {
-        const addonsText =
-          item.addOns && item.addOns.length > 0
-            ? "\nAdd-Ons:\n" +
-              item.addOns
-                .map(
-                  (addon) =>
-                    `+ ${addon.name} — UGX ${addon.price.toLocaleString()}`
-                )
-                .join("\n")
-            : "";
+.map((item) => {
+  const basePrice = item.basePrice ?? item.price;
 
-        return (
-          `${item.qty}× ${item.name} — UGX ${(
-            item.price * item.qty
-          ).toLocaleString()}` + addonsText
-        );
-      })
-      .join("\n\n");
+  const addonsText =
+    item.addOns && item.addOns.length > 0
+      ? "\nAdd-Ons:\n" +
+        item.addOns
+          .map(
+            (addon) =>
+              `+ ${addon.name} — UGX ${addon.price.toLocaleString()}`
+          )
+          .join("\n")
+      : "";
+
+  const itemTotal = item.price * item.qty;
+
+  return (
+    `${item.qty}× ${item.name} — UGX ${(
+      basePrice * item.qty
+    ).toLocaleString()}` +
+    addonsText +
+    (item.addOns && item.addOns.length > 0
+      ? `\nItem Total: UGX ${itemTotal.toLocaleString()}`
+      : "")
+  );
+})
 
     const message =
       `🍽️ New Zone 7 Order\n\n` +
@@ -1834,6 +1842,9 @@ export default function Zone7OrderingPage() {
                                     (selected) =>
                                       selected.name === addon.name
                                   );
+
+
+                                  
                                 return (
 <label
   key={`${item.name}-${addon.name}`}
